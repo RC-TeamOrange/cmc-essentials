@@ -38,7 +38,8 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="title">CMC-Essentials</div>
+                <div class="title">By Team Orange</div>
             </div>
         </div>
     </body>
