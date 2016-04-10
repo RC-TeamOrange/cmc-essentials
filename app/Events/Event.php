@@ -1,0 +1,8 @@
+<?php
+
+namespace CmcEssentials\Events;
+
+abstract class Event
+{
+    //
+}
