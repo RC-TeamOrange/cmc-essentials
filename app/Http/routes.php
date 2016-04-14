@@ -46,18 +46,18 @@ Route::group(['as'=>'dashboard', 'middleware' => 'auth', 'prefix' => 'dashboard'
             return view('dashboard.teachingUnits.create');
         }]);
         Route::get('{id}', ['as' => 'show', function ($id) {
-            return view('dashboard.teaching-unit')->with('teachingUnit', TeachingUnit::find($id));
+            return view('dashboard.teachingUnits.show')->with('teachingUnit', TeachingUnit::find($id));
         }]);
         Route::post('/', function() {
             $teachingUnit = TeachingUnit::create(Request::all());
-            return redirect('teaching-units/'.$teachingUnit->id)->withSuccess('Teaching unit has been created.');
+            return redirect('/dashboard/teaching-units/'.$teachingUnit->id)->withSuccess('Teaching unit has been created.');
         });
-        Route::get('{teachingUnit}/edit', ['as' => 'edit', function () {
-            return view('dashboard.teaching-unit');
+        Route::get('{teachingUnit}/edit', ['as' => 'edit', function (TeachingUnit $teachingUnit) {
+            return view('dashboard.teachingUnits.edit')->with('teachingUnit', $teachingUnit);
         }]);
         Route::put('{teachingUnit}', function(TeachingUnit $teachingUnit) {
             $teachingUnit->update(Request::all());
-            return redirect('teaching-units/'.$teachingUnit->id)->withSuccess('Teaching unit has been updated.');
+            return redirect('/dashboard/teaching-units/'.$teachingUnit->id)->withSuccess('Teaching unit has been updated.');
         });
         Route::get('{teachingUnit}/delete', ['as' => 'delete', function(TeachingUnit $teachingUnit) {
             $teachingUnit->delete();

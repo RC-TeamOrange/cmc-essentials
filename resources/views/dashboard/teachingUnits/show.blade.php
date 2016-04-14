@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('header')
-    <a href="{{ url('/') }}">Back to teaching unnits</a>
+    <a href="{{ url('/dashboard') }}">Back to teaching unnits</a>
     <h2>
         {{ $teachingUnit->name }}
     </h2>
@@ -15,11 +15,12 @@
     <p>Last edited: {{ $teachingUnit->updated_at->diffForHumans() }}</p>
 @stop
     @section('content')
-    <p>Title: {{ $teachingUnit->title }}</p>
-    <p>
-        @if ($teachingUnit->description)
-            Study Material:
-            {{ link_to('dashboard/teaching-units/'.$teachingUnit->id.'/study-materials', $teachingUnit->title) }}
-        @endif
-    </p>
+    <div>Title: {{ $teachingUnit->title }}</div>
+    <div>Level: {{ $teachingUnit->level }}</div>
+    <div>Slug: {{ $teachingUnit->slug }}</div>
+    <div>Duration: {{ $teachingUnit->duration }}</div>
+    <div>Description: {!! $teachingUnit->description !!}</div>
+    <div>
+        {{ link_to('dashboard/teaching-units/'.$teachingUnit->id.'/study-materials', 'Study Materials') }}
+    </div>
 @stop
