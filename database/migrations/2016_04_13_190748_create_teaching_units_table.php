@@ -17,6 +17,7 @@ class CreateTeachingUnitsTable extends Migration
                 $table->increments('id');
                 $table->string('slug');
                 $table->smallInteger('level');
+                $table->smallInteger('duration');
                 $table->text('title');
                 $table->longText('description');
                 $table->timestamps();
