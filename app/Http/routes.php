@@ -13,6 +13,20 @@ use CmcEssentials\TeachingUnit;
 |
 */
 
+
+/*Application Front end routes*/
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('teaching-units', function () {
+    return view('teachingUnits')->with('teachingUnits', TeachingUnit::all());
+});
+
+Route::get('teaching-units/{slug}', function ($slug) {
+    return view('teachingUnit')->with('teachingUnit', TeachingUnit::where('slug', $slug)->firstOrFail());
+});
+
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -25,9 +39,6 @@ Route::get('/login', function () {
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 /**Admin routes*/
 /**
@@ -46,7 +57,7 @@ Route::group(['as'=>'dashboard', 'middleware' => 'auth', 'prefix' => 'dashboard'
             return view('dashboard.teachingUnits.create');
         }]);
         Route::get('{id}', ['as' => 'show', function ($id) {
-            return view('dashboard.teachingUnits.show')->with('teachingUnit', TeachingUnit::find($id));
+            return view('dashboard.teachingUnits.show')->with('teachingUnit', TeachingUnit::findOrFail($id));
         }]);
         Route::post('/', function() {
             $teachingUnit = TeachingUnit::create(Request::all());
