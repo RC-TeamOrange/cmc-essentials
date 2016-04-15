@@ -2,7 +2,7 @@
 @section('header')
     <a href="{{ url('/dashboard') }}">Back to teaching unnits</a>
     <h2>
-        {{ $teachingUnit->name }}
+        {{ $teachingUnit->title }}
     </h2>
     <a href="{{ url('dashboard/teaching-units/'.$teachingUnit->id.'/edit') }}">
         <span class="glyphicon glyphicon-edit"></span>

@@ -5,28 +5,24 @@
     </div>
 </div>
 <div class="form-group">
-    {!! Form::label('slug', 'Slug') !!}
-    <div class="form-controls">
-        {!! Form::text('slug', null, ['class' => 'form-control']) !!}
-    </div>
-</div>
-<div class="form-group">
     {!! Form::label('level', 'Level') !!}
     <div class="form-controls">
         {!! Form::number('level', null, ['class' => 'form-control']) !!}
     </div>
 </div>
 <div class="form-group">
-    {!! Form::label('duration', 'Duration') !!}
+    {!! Form::label('order', 'Order') !!}
     <div class="form-controls">
-        {!! Form::number('duration', null, ['class' => 'form-control']) !!}
+        {!! Form::number('order', null, ['class' => 'form-control']) !!}
     </div>
 </div>
 <div class="form-group">
-    {!! Form::label('description', 'Description') !!}
+    {!! Form::label('description', 'Content') !!}
     <div class="form-controls">
         @include('tinymce::tpl') 
         {!! Form::textarea('description', null, ['class' => 'form-control tinymce']) !!}
     </div>
 </div>
-{!! Form::submit('Save Unit', ['class' => 'btn btn-primary']) !!}
+
+{!! Form::hidden('teaching_unit_id', $teachingUnit->id) !!}
+{!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
