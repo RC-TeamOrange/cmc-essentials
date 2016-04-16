@@ -6,3 +6,26 @@ body *{
    font-family: Roboto;
    font-weight:  300;
 }
+.pagination a{
+    display: none;
+}
+
+.pagination [rel="prev"], .pagination [rel="next"]{
+    display: inline-block;
+    margin: 5px 60px;
+    font-size: 200%;
+    border-radius: 0px !important;
+    padding: 20px 40px;
+}
+.pagination [rel="prev"]{
+	float: left;
+}
+.pagination [rel="next"]{
+	float: right;
+}
+.pager li>a, .pagination li.disabled, .pagination li.active{
+    display: none;
+}
+.pagination{
+	width: 100%;
+} 

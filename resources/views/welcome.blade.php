@@ -4,4 +4,5 @@
 @stop
 @section('content')
 <p>This is a web app for introductory studies into CMC.</p>
+<a href="{{ route('syllabus') }}">Continue</a>
 @stop

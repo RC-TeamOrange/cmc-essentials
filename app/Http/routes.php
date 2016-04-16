@@ -2,6 +2,7 @@
 use CmcEssentials\Source;
 use CmcEssentials\StudyMaterial;
 use CmcEssentials\TeachingUnit;
+use CmcEssentials\Presenter;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -15,16 +16,26 @@ use CmcEssentials\TeachingUnit;
 
 
 /*Application Front end routes*/
-Route::get('/', function () {
+Route::get('/', ['as' => 'home', function () {
     return view('welcome');
-});
-
-Route::get('teaching-units', function () {
-    return view('teachingUnits')->with('teachingUnits', TeachingUnit::all());
-});
-
-Route::get('teaching-units/{slug}', function ($slug) {
-    return view('teachingUnit')->with('teachingUnit', TeachingUnit::where('slug', $slug)->firstOrFail());
+}]);
+Route::get('/syllabus', ['as' => 'syllabus', function () {
+    return view('syllabus');
+}]);
+Route::group(['as'=>'teaching-units::', 'prefix' => 'teaching-units'], function () {
+    Route::get('/', ['as' => 'showall', function () {
+        return view('teachingUnits')->with('teachingUnits', TeachingUnit::all());
+    }]);
+    Route::get('/{slug}', ['as' => 'show', function ($slug) {
+        return view('teachingUnit')->with('teachingUnit', TeachingUnit::where('slug', $slug)->firstOrFail());
+    }]);
+    Route::get('/{slug}/study', ['as' => 'study', function ($slug) {
+        $teachingUnit = TeachingUnit::where('slug', $slug)->first();
+        //dd($teachingUnit->id);
+        $studyMaterial = StudyMaterial::where('teaching_unit_id', $teachingUnit->id)->paginate(1);
+        //dd($studyMaterial);
+        return view('StudyContent')->with('studyMaterials', $studyMaterial);
+    }]);
 });
 
 // Authentication routes...
@@ -99,12 +110,12 @@ Route::group(['as'=>'dashboard::', 'middleware' => 'auth', 'prefix' => 'dashboar
                 ->with('studyMaterial', $studyMaterial)
                 ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
             }]);
-            Route::put('{id}', function($teachingUnitId, $id) {
+            Route::put('/{id}', function($teachingUnitId, $id) {
                 $studyMaterial = StudyMaterial::find($id);
                 $studyMaterial->update(Request::all());
                 return redirect('/dashboard/teaching-units/'.$teachingUnitId.'/study-materials/'.$studyMaterial->id)->withSuccess('Study material has been updated.');
             });
-            Route::get('{id}/delete', ['as' => 'delete', function($teachingUnitId, $id) {
+            Route::get('/{id}/delete', ['as' => 'delete', function($teachingUnitId, $id) {
                 $studyMaterial = StudyMaterial::find($id);
                 $studyMaterial->delete();
                 return redirect('dashboard/teaching-units/'.$teachingUnitId.'/study-materials')->withSuccess('Study material has been deleted.');
