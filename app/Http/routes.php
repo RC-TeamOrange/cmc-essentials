@@ -32,7 +32,7 @@ Route::group(['as'=>'teaching-units::', 'prefix' => 'teaching-units'], function 
     Route::get('/{slug}/study', ['as' => 'study', function ($slug) {
         $teachingUnit = TeachingUnit::where('slug', $slug)->first();
         //dd($teachingUnit->id);
-        $studyMaterial = StudyMaterial::where('teaching_unit_id', $teachingUnit->id)->paginate(1);
+        $studyMaterial = StudyMaterial::where('teaching_unit_id', $teachingUnit->id)->orderBy('level', 'asc')->paginate(1);
         //dd($studyMaterial);
         return view('StudyContent')->with('studyMaterials', $studyMaterial);
     }]);
