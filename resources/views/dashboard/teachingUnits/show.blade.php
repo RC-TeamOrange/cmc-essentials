@@ -23,4 +23,7 @@
     <div>
         {{ link_to('dashboard/teaching-units/'.$teachingUnit->id.'/study-materials', 'Study Materials') }}
     </div>
+    <div>
+        <a href="{{ route('dashboard::teaching-units::quizzes::showall', ['teachingUnitId'=>$teachingUnit->id]) }}">Quizzes</a>
+    </div>
 @stop
