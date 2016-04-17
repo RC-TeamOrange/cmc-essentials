@@ -13,5 +13,5 @@
 @endforeach
    
 <div class="pager">
-{!! with(new CmcEssentials\PaginationPresenter($questions))->render() !!}
+{!! with(new CmcEssentials\PaginationPresenter($questions))->render($teachingUnit, $quiz) !!}
 </div>

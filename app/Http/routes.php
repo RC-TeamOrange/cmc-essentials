@@ -43,9 +43,7 @@ Route::group(['as'=>'teaching-units::', 'prefix' => 'teaching-units'], function 
         
         Route::post('{quizSlug}/questions', ['as' => 'questions', 'uses'=>'QuizQuestionController@saveChoice']);
         
-        Route::get('{quizSlug}/results', ['as' => 'results', function ($teachingUnitSlug, $quizSlug) {
-            return view('quiz.quizResults')->with('teachingUnits', TeachingUnit::orderBy('level', 'asc')->get());
-        }]);
+        Route::get('{quizSlug}/results', ['as' => 'results', 'uses'=>'QuizResultsController@getQuizResults']);
         
     });
 });

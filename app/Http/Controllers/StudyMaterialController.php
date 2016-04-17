@@ -22,7 +22,7 @@ class StudyMaterialController extends Controller
         if(Request::ajax()){
             $teachingUnit = TeachingUnit::where('slug', $slug)->first();
             $studyMaterial = StudyMaterial::where('teaching_unit_id', $teachingUnit->id)->orderBy('level', 'asc')->paginate(1);
-            return view('studyMaterials')->with('studyMaterials', $studyMaterial);
+            return view('studyMaterials')->with('studyMaterials', $studyMaterial)->with('teachingUnit', $teachingUnit);
         }
         $teachingUnit = TeachingUnit::where('slug', $slug)->first();
         $studyMaterial = StudyMaterial::where('teaching_unit_id', $teachingUnit->id)->orderBy('level', 'asc')->paginate(1);
