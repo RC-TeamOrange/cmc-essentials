@@ -20,10 +20,10 @@ class QuizResultsController extends Controller
         $teachingUnit = TeachingUnit::where('slug', $teachingUnitSlug)->first();
         $nextTeachingUnit = TeachingUnit::where('level', '>', $teachingUnit->level)->orderBy('level', 'asc')->first();
         $quiz = Quiz::where('slug', $quizSlug)->first();
-        $questions = Question::where('quiz_id', $quiz->id)->orderBy('id', 'asc');
+        $questions = Question::where('quiz_id', $quiz->id)->orderBy('id', 'asc')->get();
         foreach ($questions as $key => $question) {
             $answers = Answer::where('question_id', $question->id)->orderBy('rank', 'asc')->get();
-            $question->answers = $answers;
+            $questions[$key]->answers = $answers;
         }
         $quizChoices = json_decode(Request::cookie('quizeChoices'), true);
         $view = view('quiz.quizResults')
