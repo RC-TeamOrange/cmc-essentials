@@ -7,6 +7,6 @@
 @endforeach
    
 <div class="pager">
-{!! with(new CmcEssentials\PaginationPresenter($studyMaterials))->render() !!}
+{!! with(new CmcEssentials\PaginationPresenter($studyMaterials))->render($teachingUnit) !!}
 
 </div>

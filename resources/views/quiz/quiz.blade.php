@@ -24,7 +24,7 @@
             }
         });
         jQuery(document).ready(function() {
-            jQuery(document).on('click', '.pagination a', function (e) {
+            jQuery(document).on('click', '.pagination li a', function (e) {
                 getStudyMaterial(jQuery(this).attr('href').split('page=')[1]);
                 e.preventDefault();
             });
