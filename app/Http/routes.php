@@ -5,7 +5,6 @@ use CmcEssentials\TeachingUnit;
 use CmcEssentials\Quiz;
 use CmcEssentials\Question;
 use CmcEssentials\Answer;
-use CmcEssentials\Presenter;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -32,11 +31,23 @@ Route::group(['as'=>'teaching-units::', 'prefix' => 'teaching-units'], function 
     Route::get('/{slug}', ['as' => 'show', function ($slug) {
         return view('teachingUnit')->with('teachingUnit', TeachingUnit::where('slug', $slug)->firstOrFail());
     }]);
-    Route::get('/{slug}/study', ['as' => 'study', function ($slug) {
-        $teachingUnit = TeachingUnit::where('slug', $slug)->first();
-        $studyMaterial = StudyMaterial::where('teaching_unit_id', $teachingUnit->id)->orderBy('level', 'asc')->paginate(1);
-        return view('StudyContent')->with('studyMaterials', $studyMaterial);
-    }]);
+    Route::get('/{slug}/study', ['as' => 'study', 'uses'=>'StudyMaterialController@showStudyMaterials']);
+    Route::group(['as'=>'quizzes::', 'prefix' => '{teachingUnitSlug}/quizzes'], function ($teachingUnitSlug) {
+        Route::get('/', ['as' => 'showall', function ($teachingUnitSlug) {
+            return view('quiz.index')
+            ->with('quizzes', Quiz::orderBy('level', 'asc')->get())
+            ->with('teachingUnit', TeachingUnit::where('slug', $teachingUnitSlug)->first());
+        }]);
+        
+        Route::get('{quizSlug}/questions', ['as' => 'questions', 'uses'=>'QuizQuestionController@getQuizQuestion']);
+        
+        Route::post('{quizSlug}/questions', ['as' => 'questions', 'uses'=>'QuizQuestionController@saveChoice']);
+        
+        Route::get('{quizSlug}/results', ['as' => 'results', function ($teachingUnitSlug, $quizSlug) {
+            return view('quiz.quizResults')->with('teachingUnits', TeachingUnit::orderBy('level', 'asc')->get());
+        }]);
+        
+    });
 });
 
 // Authentication routes...
@@ -91,7 +102,7 @@ Route::group(['as'=>'dashboard::', 'middleware' => 'auth', 'prefix' => 'dashboar
         Route::group(['as'=>'study-materials::', 'prefix' => '{teachingUnitId}/study-materials'], function ($teachingUnitId) {
             Route::get('/', ['as' => 'showall', function ($teachingUnitId) {
                 return view('dashboard.studyMaterials.index')
-                ->with('studyMaterials', StudyMaterial::all())
+                ->with('studyMaterials', StudyMaterial::where('teaching_unit_id', $teachingUnitId)->get())
                 ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
             }]);
             Route::get('create', ['as' => 'create', function ($teachingUnitId) {
@@ -129,7 +140,7 @@ Route::group(['as'=>'dashboard::', 'middleware' => 'auth', 'prefix' => 'dashboar
         Route::group(['as'=>'quizzes::', 'prefix' => '{teachingUnitId}/quizzes'], function ($teachingUnitId) {
             Route::get('/', ['as' => 'showall', function ($teachingUnitId) {
                 return view('dashboard.quizzes.index')
-                ->with('quizzes', Quiz::all())
+                ->with('quizzes', Quiz::where('teaching_unit_id', $teachingUnitId)->get())
                 ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
             }]);
             Route::get('create', ['as' => 'create', function ($teachingUnitId) {
@@ -173,7 +184,7 @@ Route::group(['as'=>'dashboard::', 'middleware' => 'auth', 'prefix' => 'dashboar
             Route::group(['as'=>'questions::', 'prefix' => '{quizId}/questions'], function ($quizId) {
                 Route::get('/', ['as' => 'showall', function ($teachingUnitId, $quizId) {
                     return view('dashboard.questions.index')
-                    ->with('questions', Question::all())
+                    ->with('questions', Question::where('quiz_id', $quizId)->get())
                     ->with('quiz', Quiz::find($quizId))
                     ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
                 }]);
@@ -221,7 +232,7 @@ Route::group(['as'=>'dashboard::', 'middleware' => 'auth', 'prefix' => 'dashboar
                 Route::group(['as'=>'answers::', 'prefix' => '{questionId}/answers'], function ($questionId) {
                     Route::get('/', ['as' => 'showall', function ($teachingUnitId, $quizId, $questionId) {
                         return view('dashboard.answers.index')
-                        ->with('answers', Answer::all())
+                        ->with('answers', Answer::where('question_id', $questionId)->get())
                         ->with('question', Question::find($questionId))
                         ->with('quiz', Quiz::find($quizId))
                         ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
@@ -245,7 +256,7 @@ Route::group(['as'=>'dashboard::', 'middleware' => 'auth', 'prefix' => 'dashboar
                     Route::post('/', function($teachingUnitId, $quizId, $questionId) {
                         $answer = Answer::create(Request::all());
                         $question = Request::get('question_id');
-                        return redirect('/dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions/'.$question.'/answers/'.$answer->id)->withSuccess('Answer choice has been created.');
+                        return redirect('/dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions/'.$questionId.'/answers/'.$answer->id)->withSuccess('Answer choice has been created.');
                     });
                     Route::get('/{answerId}/edit', ['as' => 'edit', function ($teachingUnitId, $quizId, $questionId, $answerId) {
                         $answer = Answer::find($answerId);

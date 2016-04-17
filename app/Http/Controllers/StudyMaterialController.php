@@ -19,11 +19,15 @@ class StudyMaterialController extends Controller
      */
     public function showStudyMaterials($slug)
     {
-        $teachingUnit = TeachingUnit::where('slug', $slug)->first();
-        $studyMaterial = StudyMaterial::where('teaching_unit_id', $teachingUnit->id)->paginate(1);
-        if (Request::ajax()) {
-            return Response::json(View::make('studyMaterials', array('studyMaterials' => $studyMaterial))->render());
+        if(Request::ajax()){
+            $teachingUnit = TeachingUnit::where('slug', $slug)->first();
+            $studyMaterial = StudyMaterial::where('teaching_unit_id', $teachingUnit->id)->orderBy('level', 'asc')->paginate(1);
+            return view('studyMaterials')->with('studyMaterials', $studyMaterial);
         }
-        return View::make('studyMaterials', array('studyMaterials' => $studyMaterial));
+        $teachingUnit = TeachingUnit::where('slug', $slug)->first();
+        $studyMaterial = StudyMaterial::where('teaching_unit_id', $teachingUnit->id)->orderBy('level', 'asc')->paginate(1);
+        return view('StudyContent')
+        ->with('studyMaterials', $studyMaterial)
+        ->with('teachingUnit', $teachingUnit);
     }
 }

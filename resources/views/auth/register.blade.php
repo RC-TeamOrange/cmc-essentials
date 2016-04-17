@@ -1,5 +1,8 @@
-<!-- resources/views/auth/register.blade.php -->
-
+@extends('layouts.master')
+@section('header')
+<h2>Register</h2>
+@stop
+@section('content')
 <form method="POST" action="/auth/register">
     {!! csrf_field() !!}
 
@@ -27,3 +30,5 @@
         <button type="submit">Register</button>
     </div>
 </form>
+@stop
+

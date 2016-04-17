@@ -9,9 +9,36 @@
     <div class="study-material">
         @include('studyMaterials')
     </div>
-    
+    <input type="hidden" id="teachingUnit" value="{{ $teachingUnit->id }}" />
     <script>
+        
+        $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         /*
+        $(document).ready(function(){
+            $(".pagination a").bind("click", function(e){
+                getStudyMaterial($(this).attr('href').split('page=')[1]);
+                e.preventDefault();
+            });
+        });
+        function getStudyMaterial(page) {
+            console.log('/page/' + page);
+            $.ajax({
+                type: "GET",
+                url : '/?page=' + page,
+                dataType: 'json',
+                data: { teachingUnitId : $("teachingUnit").val() },
+                success: function(data){
+                    console.log(data);
+                    jQuery('.study-materials').html(data);
+                }
+            });
+        }
+        */
+        
         jQuery(window).on('hashchange', function() {
             if (window.location.hash) {
                 var page = window.location.hash.replace('#', '');
@@ -30,15 +57,17 @@
         });
         function getStudyMaterial(page) {
             jQuery.ajax({
+                type: "GET",
                 url : '?page=' + page,
-                dataType: 'json',
+                dataType: 'json'
             }).done(function (data) {
-                jQuery('.study-materials').html(data);
+                jQuery('.study-material').html(data.responseText);
                 location.hash = page;
-            }).fail(function () {
-                alert('Study material could not be loaded.');
+            }).fail(function (data) {
+                jQuery('.study-material').html(data.responseText);
+                location.hash = page;
             });
         }
-        */
+        
      </script>
 @stop
