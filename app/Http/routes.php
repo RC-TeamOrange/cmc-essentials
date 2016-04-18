@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Http\Response;
+
 use CmcEssentials\Source;
 use CmcEssentials\StudyMaterial;
 use CmcEssentials\TeachingUnit;
@@ -21,6 +24,13 @@ use CmcEssentials\Answer;
 Route::get('/', ['as' => 'home', function () {
     return view('welcome');
 }]);
+Route::get('/session-login', ['as' => 'sessionLogin', function () {
+    $sessionData = json_decode(Request::cookie('CmcESession'), true);
+    if(!empty($sessionData['username'])){
+        return redirect('/teaching-units');
+    }
+    return view('sessionLogin')->with('url', route('teaching-units::postSessionLogin'));
+}]);
 Route::get('/syllabus', ['as' => 'syllabus', function () {
     return view('syllabus');
 }]);
@@ -28,14 +38,25 @@ Route::group(['as'=>'teaching-units::', 'prefix' => 'teaching-units'], function 
     Route::get('/', ['as' => 'showall', function () {
         return view('teachingUnits')->with('teachingUnits', TeachingUnit::orderBy('level', 'asc')->get());
     }]);
+    Route::post('/', ['as' => 'postSessionLogin', function () {
+        
+        $username = trim(Request::get('username'));
+        if(strlen($username) < 2 ){
+            return redirect('/session-login')->withSuccess('Username required.');
+        }
+        $response = new Response(view('teachingUnits')->with('teachingUnits', TeachingUnit::orderBy('level', 'asc')->get()));
+        return $response->withCookie('CmcESession', json_encode(array('username'=> Request::get('username'))), 180);
+    }]);
     Route::get('/{slug}', ['as' => 'show', function ($slug) {
         return view('teachingUnit')->with('teachingUnit', TeachingUnit::where('slug', $slug)->firstOrFail());
     }]);
     Route::get('/{slug}/study', ['as' => 'study', 'uses'=>'StudyMaterialController@showStudyMaterials']);
+    
     Route::group(['as'=>'quizzes::', 'prefix' => '{teachingUnitSlug}/quizzes'], function ($teachingUnitSlug) {
         Route::get('/', ['as' => 'showall', function ($teachingUnitSlug) {
+            $teachingUnit = TeachingUnit::where('slug', $teachingUnitSlug)->firstOrFail();
             return view('quiz.index')
-            ->with('quizzes', Quiz::orderBy('level', 'asc')->get())
+            ->with('quizzes', Quiz::where('teaching_unit_id', $teachingUnit->id)->orderBy('level', 'asc')->get())
             ->with('teachingUnit', TeachingUnit::where('slug', $teachingUnitSlug)->first());
         }]);
         

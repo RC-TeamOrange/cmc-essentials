@@ -39,5 +39,5 @@
 
 </ul>
 
-<a href="{{ route('teaching-units::showall') }}">Start</a>
+<a href="{{ route('sessionLogin') }}">Start</a>
 @stop
