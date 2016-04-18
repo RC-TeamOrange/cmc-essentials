@@ -39,13 +39,15 @@ Route::group(['as'=>'teaching-units::', 'prefix' => 'teaching-units'], function 
         return view('teachingUnits')->with('teachingUnits', TeachingUnit::orderBy('level', 'asc')->get());
     }]);
     Route::post('/', ['as' => 'postSessionLogin', function () {
-        
+        /**
+            Ensure that the user provided a valid username, otherwise redirect them back to the session login page.
+        */
         $username = trim(Request::get('username'));
         if(strlen($username) < 2 ){
             return redirect('/session-login')->withSuccess('Username required.');
         }
         $response = new Response(view('teachingUnits')->with('teachingUnits', TeachingUnit::orderBy('level', 'asc')->get()));
-        return $response->withCookie('CmcESession', json_encode(array('username'=> Request::get('username'))), 180);
+        return $response->withCookie('CmcESession', json_encode(array('username'=> Request::get('username'))), 30);
     }]);
     Route::get('/{slug}', ['as' => 'show', function ($slug) {
         return view('teachingUnit')->with('teachingUnit', TeachingUnit::where('slug', $slug)->firstOrFail());

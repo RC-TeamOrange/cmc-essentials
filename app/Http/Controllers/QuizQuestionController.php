@@ -24,10 +24,12 @@ class QuizQuestionController extends Controller
             $questions = Question::where('quiz_id', $quiz->id)->orderBy('id', 'asc')->paginate(1);
             $question= $questions[0];
             $answerChoices = Answer::where('question_id', $question->id)->orderBy('rank', 'asc')->get();
+            $quizChoices = json_decode(Request::cookie('quizeChoices'), true);
             return view('quiz.quizQuestion')
             ->with('teachingUnit', $teachingUnit)
             ->with('quiz', $quiz)
             ->with('questions', $questions)
+            ->with('quizChoices', $quizChoices)
             ->with('answerChoices', $answerChoices);
         }
         $teachingUnit = TeachingUnit::where('slug', $teachingUnitSlug)->first();

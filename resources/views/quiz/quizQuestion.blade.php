@@ -6,7 +6,11 @@
         @foreach ($answerChoices as $answerChoice)
             <div class="answerchoice">
                 <span class="choice-text"><label for="{{$answerChoice->id}}">{!! $answerChoice->content !!}</label></span>
-                <input id="{{$answerChoice->id}}" type="radio" name="choice" />
+                @if(!empty($quizChoices[$question->id]) && $quizChoices[$question->id] == $answerChoice->id)
+                    <input id="{{$answerChoice->id}}" type="radio" name="choice" checked="checked" />
+                @else
+                    <input id="{{$answerChoice->id}}" type="radio" name="choice" />
+                @endif
             </div>
         @endforeach
     </article>
