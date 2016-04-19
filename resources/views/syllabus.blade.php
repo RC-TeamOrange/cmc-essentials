@@ -1,43 +1,35 @@
 @extends('layouts.master')
 @section('header')
-<h2>CMC-Essentials Syllabus</h2>
+<h2>Syllabus</h2>
 @stop
 @section('content')
 
-<ul class="a">
-  <li>Unit 1 : Computer Mediated Communication</li>
-    <ul class="b">
-        <li>Introduction</li>
-        <li>Cues Filtered out</li>
-        <li>Cues to choose by</li>
-        <li>Cues Filtered in</li>
-        <li>Cues about us</li>
-        <li>Cues bent and Twisted</li>
-    </ul>
-    <br>
+<div class="list-group">
+  <div class="list-group-item active"> Unit 1 : Computer Mediated Communication</div>
+  <div class="list-group-item">Introduction</div>
+  <div class="list-group-item">Cues Filtered out</div>
+  <div class="list-group-item">Cues to choose by</div>
+  <div class="list-group-item">Cues Filtered in</div>
+  <div class="list-group-item">Cues about us</div>
+  <div class="list-group-item">Cues bent and Twisted</div>
+  <div class="list-group-item"> Quiz</div>
 
- <li>Unit 2 : Theories of CMC</li>
-    <ul class="b">
-        <li>Social Information Processing Theory</li>
-        <li>Hyperpersonal Model</li>
-        <li>SIDE theory</li>
-    </ul>
-    <br>
+  <div class="list-group-item active"> Unit 2 : Theories of CMC</div>
+  <div class="list-group-item">Social Information Processing Theory</div>
+  <div class="list-group-item">Hyperpersonal Model</div>
+  <div class="list-group-item">SIDE theory</div>
+  <div class="list-group-item"> Quiz</div>
 
- <li>Unit 3 : Personal connections in digital spaces</li>
-      <ul class="b">
-        <li>Communication in digital spaces</li>
-        <li>New relationships, new selves?</li>
-    </ul>
-    <br>
+  <div class="list-group-item active"> Unit 3 : Personal connections in digital spaces</div>
+  <div class="list-group-item">Communication in digital spaces</div>
+  <div class="list-group-item">New relationships, new selves?</div>
+  <div class="list-group-item"> Quiz</div>
 
-  <li>Quiz</li>
-  <br>
+   <div class="list-group-item active"> References</div>
+</div>
 
-  <li>References</li>
-  <br>
+<div class="text-center">
+    <a href="{{ URL::route('sessionLogin')}}"><div class='btn btn-primary'>START</div></a>
+</div>
 
-</ul>
-
-<a href="{{ route('sessionLogin') }}">Start</a>
 @stop

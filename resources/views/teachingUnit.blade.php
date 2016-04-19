@@ -6,11 +6,20 @@
     </h2>
 @stop
     @section('content')
-    <div>Title: {{ $teachingUnit->title }}</div>
-    <div>Level: {{ $teachingUnit->level }}</div>
-    <div>Duration: {{ $teachingUnit->duration }}</div>
-    <div>Description: {!! $teachingUnit->description !!}</div>
-    <div>
-        <a href="{{ route('teaching-units::study', ['slug'=>$teachingUnit->slug]) }}">Start</a>
+
+    <div class="row">
+      <div class="container">
+        <div class="thumbnail">
+          <img src="/var/www/laravel/resources/icons/education.png">
+          <div class="caption">
+            <h3>{{ $teachingUnit->title }}</h3>
+            <div>Summary of content: {{ $teachingUnit->description }}</div>
+            <div>Duration: {{ $teachingUnit->duration }} minutes</div>
+            <div>Number of questions:</div>
+            <p> <div class="text-center"><a href="{{ route('teaching-units::study', ['slug'=>$teachingUnit->slug]) }}" class="btn btn-primary" role="button">Start</a>
+          </div>
+        </div>
+      </div>
     </div>
+
 @stop
