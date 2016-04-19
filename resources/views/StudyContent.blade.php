@@ -69,6 +69,17 @@
                 location.hash = page;
             });
         }
+	function updateTimer(timeLeft){
+            jQuery.ajax({
+                type: "POST",
+                dataType: 'json',
+                data:{action: "updateTimer", timeLeft: timeLeft}
+            }).done(function (data) {
+                console.log(data);
+            }).fail(function (data) {
+                console.log(data);
+            });
+        }
         
      </script>
      <script type="text/javascript">
@@ -77,6 +88,9 @@
                 jQuery('#hms_timer').startTimer({
                     onComplete: function(element){
                         window.location.replace("{{ url('/teaching-units') }}");
+                    },
+		    onTimeLeft: function(timeLeft){
+                        updateTimer(timeLeft);
                     }
                 });
             });

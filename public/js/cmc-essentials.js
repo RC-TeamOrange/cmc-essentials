@@ -65,6 +65,10 @@
           timer.resetTimer(timerBoxElement, options, cssClassSnapshot);
         }
       });
+      
+      timerBoxElement.on('timeLeft', function(e, timeLeft) {
+        timerBoxElement.onTimeLeft(timeLeft);
+      });
 
       createSubDivs(timerBoxElement);
       return this.startCountdown(timerBoxElement, options);
@@ -112,6 +116,8 @@
     }.bind(this);
 
     element.onComplete = options.onComplete || defaultComplete;
+    
+    element.onTimeLeft = options.onTimeLeft;
 
     var secondsLeft = this.fetchSecondsLeft(element);
 
@@ -120,10 +126,13 @@
     var timeLeft = endTime - this.currentTime();
 
     this.setFinalValue(this.formatTimeLeft(timeLeft), element);
-
+    
+    this.setCurrentTimeTrigger(timeLeft, element);
+    
     intervalId = setInterval((function() {
       timeLeft = endTime - this.currentTime();
       this.setFinalValue(this.formatTimeLeft(timeLeft), element);
+      this.setCurrentTimeTrigger(timeLeft, element);
     }.bind(this)), refreshRate);
 
     element.intervalId = intervalId;
@@ -169,6 +178,10 @@
     }
   };
 
+  Timer.prototype.setCurrentTimeTrigger = function(timeLeft, element){
+      element.trigger('timeLeft', [timeLeft]);
+      return false;
+  }
   Timer.prototype.setFinalValue = function(finalValues, element) {
 
     if(finalValues.length === 0){

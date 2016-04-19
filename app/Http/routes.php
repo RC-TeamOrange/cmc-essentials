@@ -53,7 +53,8 @@ Route::group(['as'=>'teaching-units::', 'prefix' => 'teaching-units'], function 
         return view('teachingUnit')->with('teachingUnit', TeachingUnit::where('slug', $slug)->firstOrFail());
     }]);
     Route::get('/{slug}/study', ['as' => 'study', 'uses'=>'StudyMaterialController@showStudyMaterials']);
-    
+    Route::post('/{slug}/study', ['as' => 'study', 'uses'=>'StudyMaterialController@ajaxHandeller']);   
+ 
     Route::group(['as'=>'quizzes::', 'prefix' => '{teachingUnitSlug}/quizzes'], function ($teachingUnitSlug) {
         Route::get('/', ['as' => 'showall', function ($teachingUnitSlug) {
             $teachingUnit = TeachingUnit::where('slug', $teachingUnitSlug)->firstOrFail();

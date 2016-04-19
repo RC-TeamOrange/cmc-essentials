@@ -37,6 +37,11 @@
                 });
             });
         });
+         jQuery.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         function saveChoice(choice){
             jQuery.ajaxSetup({
                 headers: {
@@ -47,11 +52,22 @@
             jQuery.ajax({
                 type: "POST",
                 dataType: 'json',
-                data:{choice: choice, question: jQuery("#questionId").val()}
+                data:{action: "saveChoice", choice: choice, question: jQuery("#questionId").val()}
             }).done(function (data) {
                 console.log(data);
             }).fail(function (data) {
                 jQuery('.quiz-question').html(data.responseText);
+            });
+        }
+        function updateTimer(timeLeft){
+            jQuery.ajax({
+                type: "POST",
+                dataType: 'json',
+                data:{action: "updateTimer", timeLeft: timeLeft}
+            }).done(function (data) {
+                console.log(data);
+            }).fail(function (data) {
+                console.log(data);
             });
         }
         function getStudyMaterial(page) {
@@ -80,6 +96,9 @@
                 jQuery('#hms_timer').startTimer({
                     onComplete: function(element){
                         window.location.replace("{{ url('/teaching-units') }}");
+                    },
+                    onTimeLeft: function(timeLeft){
+			updateTimer(timeLeft);
                     }
                 });
             });

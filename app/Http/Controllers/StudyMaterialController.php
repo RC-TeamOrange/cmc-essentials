@@ -41,4 +41,13 @@ class StudyMaterialController extends Controller
         $response = new Response($view);
         return $response->withCookie('CmcESession', json_encode($cookieData), 180);
     }
+	public function ajaxHandeller($slug){
+		if(Request::ajax()){
+			$teachingUnit = TeachingUnit::where('slug', $slug)->first();
+			$cookieData = json_decode(Request::cookie('CmcESession'), true);
+                $cookieData["timer"][$teachingUnit->id] =  Request::get("timeLeft");
+                $response = new Response();
+                return $response->withCookie('CmcESession', json_encode($cookieData), 180);
+		};
+}
 }
