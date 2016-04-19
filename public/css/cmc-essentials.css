@@ -29,3 +29,7 @@ body *{
 .pagination{
 	width: 100%;
 } 
+#hms_timer div{
+	display: inline-block;
+	clear: both;
+}

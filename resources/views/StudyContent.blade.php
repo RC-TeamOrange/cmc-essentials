@@ -2,6 +2,7 @@
 @section('header')
     <a href="{{ url('/teaching-units') }}">Back to teaching units</a>
     <h2>
+        <span id="hms_timer" class="pull-right" data-seconds-left="{{$timeLeft}}"></span><div class="clearfix"></div>
     </h2>
     
 @stop
@@ -70,4 +71,15 @@
         }
         
      </script>
+     <script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery(function(){
+                jQuery('#hms_timer').startTimer({
+                    onComplete: function(element){
+                        window.location.replace("{{ url('/teaching-units') }}");
+                    }
+                });
+            });
+        });
+        </script>
 @stop

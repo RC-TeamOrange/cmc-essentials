@@ -4,7 +4,7 @@ namespace CmcEssentials\Http\Controllers;
 
 use Request;
 use View;
-
+use Illuminate\Http\Response;
 use CmcEssentials\Http\Requests;
 
 use CmcEssentials\StudyMaterial;
@@ -25,9 +25,20 @@ class StudyMaterialController extends Controller
             return view('studyMaterials')->with('studyMaterials', $studyMaterial)->with('teachingUnit', $teachingUnit);
         }
         $teachingUnit = TeachingUnit::where('slug', $slug)->first();
+        $cookieData = json_decode(Request::cookie('CmcESession'), true);
+        if(!empty($cookieData['timer'])){
+            $timeer = $cookieData['timer'];
+            $timeLeft = !empty($timeer[$teachingUnit->id]) ? $timeer[$teachingUnit->id] :  $teachingUnit->duration * 60;
+        }else{
+            $timeLeft = $teachingUnit->duration * 60;
+            $cookieData['timer'] = array($teachingUnit->id => $timeLeft);
+        }
         $studyMaterial = StudyMaterial::where('teaching_unit_id', $teachingUnit->id)->orderBy('level', 'asc')->paginate(1);
-        return view('StudyContent')
+        $view = view('StudyContent')
+        ->with('timeLeft', $timeLeft)
         ->with('studyMaterials', $studyMaterial)
         ->with('teachingUnit', $teachingUnit);
+        $response = new Response($view);
+        return $response->withCookie('CmcESession', json_encode($cookieData), 180);
     }
 }
