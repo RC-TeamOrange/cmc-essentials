@@ -24,7 +24,7 @@
                     <tr>
                         <td>{{$lables[$k]}}</td>
                         <td>{!! $answer->content !!}</td>
-                        @if (!empty($quizChoices) && $quizChoices[$question->id] && $answer->id == $quizChoices[$question->id])
+                        @if (!empty($quizChoices) && !empty($quizChoices[$question->id]) && $answer->id == $quizChoices[$question->id])
                             @if($answer->correct == 1)
                                 <td><span class="correct">1</span></td>
                             @else
