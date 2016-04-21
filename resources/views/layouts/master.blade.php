@@ -15,6 +15,31 @@
     </head>
     
     <body>
+	<nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+                      <span class="sr-only">Menu</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{url('/')}}">CMC-Essentials</a>
+                  </div>
+
+                  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                    <ul class="nav navbar-nav">
+                      <li class="active"><a href="https://github.com/RC-TeamOrange/cmc-essentials" target="_blank">View on GitHub<span class="sr-only">(current)</span></a></li>
+                      <li><a href="http://rc-teamorange.github.io/cmc-essentials/" target="_blank">Documentation</a></li>
+		      <li><a href="{{url('/')}}">About</a></li>
+                    </ul>
+                    
+                    <ul class="nav navbar-nav navbar-right">
+                      <li><a href="#">Logged in as: Anonymous</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
         <div class="container">
             <div class="page-header">
                 @yield('header')
