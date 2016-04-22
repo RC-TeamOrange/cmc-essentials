@@ -10,7 +10,6 @@
     <div class="row">
       <div class="container">
         <div class="thumbnail">
-          <img src="/var/www/laravel/resources/icons/education.png">
           <div class="caption">
             <h3>{{ $teachingUnit->title }}</h3>
             <div>Summary of content: {!! $teachingUnit->description !!}</div>
