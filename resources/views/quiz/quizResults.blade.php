@@ -12,36 +12,40 @@
     <div class="question">
     <span class="numbering">{{$i}}</span>
     <div class="question-tile">{!! $question->content !!}</div>
-        <table>
+        <table class="table quiz-result">
+        <thead>
         <tr>
             <th></th>
             <th>Choice</th>
             <th>Your Response</th>
             <th>Correct Choice</th>
         </tr>
+        </thead>
+        <tbody>
             <?php $k=0; ?>
             @foreach ($question->answers as $answer)
                     <tr>
-                        <td>{{$lables[$k]}}</td>
-                        <td>{!! $answer->content !!}</td>
+                        <th class="qlabel">{{$lables[$k]}}</th>
+                        <td class="qcontent">{!! $answer->content !!}</td>
                         @if (!empty($quizChoices) && !empty($quizChoices[$question->id]) && $answer->id == $quizChoices[$question->id])
                             @if($answer->correct == 1)
-                                <td><span class="correct">1</span></td>
+                                <td class="qchoice"><label><span class="correct">✓</span></label></td>
                             @else
-                                <td><span class="wrong">0</span></td>
+                                <td class="qchoice"><label><span class="wrong">✗</span></label></td>
                             @endif
                         @else
-                            <td><span class="notselected">-</span></td>
+                            <td class="qchoice"><label><span class="notselected">-</span></label></td>
                         @endif
                         @if($answer->correct == 1)
-                            <td><span class="correct">1</span></td>
+                            <td class="qchoice"><label><span class="correct">✓</span></label></td>
                         @else
-                            <td><span class="wrong">0</span></td>
+                            <td class="qchoice"><label><span class="wrong">✗</span></label></td>
                         @endif
                         
                     </tr>
                     <?php $k++; ?>
             @endforeach
+        </tbody>
         </table>
     </div>
     <?php $i++; ?>

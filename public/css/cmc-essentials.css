@@ -33,3 +33,70 @@ body *{
 	display: inline-block;
 	clear: both;
 }
+
+.answer-choices input[type="radio"]:not(old){
+  width     : 1em;
+  margin    : 0;
+  padding   : 0;
+  font-size : 1em;
+  opacity   : 0;
+}
+.answer-choices input[type="radio"]:not(old) + label{
+  display      : inline-block;
+  margin-left  : -2em;
+  line-height  : 1.5em;
+}
+.answer-choices input[type="radio"]:not(old) + label > span{
+  display          : inline-block;
+  width            : 1.3em;
+  height           : 1.3em;
+  margin           : 0.25em 0.5em 0.25em 0.25em;
+  border           : 0.0625em solid rgb(192,192,192);
+  border-radius    : 0;
+  background       : rgb(224,224,224);
+  background-image :    -moz-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+  background-image :     -ms-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+  background-image :      -o-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+  background-image : -webkit-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+  background-image :         linear-gradient(rgb(240,240,240),rgb(224,224,224));
+  vertical-align   : bottom;
+}
+.answer-choices input[type="radio"]:not(old):checked + label > span{
+  background-image :    -moz-linear-gradient(rgb(224,224,224),rgb(240,240,240));
+  background-image :     -ms-linear-gradient(rgb(224,224,224),rgb(240,240,240));
+  background-image :      -o-linear-gradient(rgb(224,224,224),rgb(240,240,240));
+  background-image : -webkit-linear-gradient(rgb(224,224,224),rgb(240,240,240));
+  background-image :         linear-gradient(rgb(224,224,224),rgb(240,240,240));
+}
+
+.answer-choices input[type="radio"]:not(old):checked + label > span > span{
+  display          : block;
+  width            : 0.8em;
+  height           : 0.8em;
+  margin           : 0.2em;
+  border           : 0.0625em solid rgb(37, 120, 209);
+  border-radius    : 0;
+  background       : rgb(37, 120, 209);
+  background-image :    -moz-linear-gradient(rgb(39, 128, 227),rgb(104, 163, 226));
+  background-image :     -ms-linear-gradient(rgb(39, 128, 227),rgb(104, 163, 226));
+  background-image :      -o-linear-gradient(rgb(39, 128, 227),rgb(104, 163, 226));
+  background-image : -webkit-linear-gradient(rgb(39, 128, 227),rgb(104, 163, 226));
+  background-image :         linear-gradient(rgb(39, 128, 227),rgb(104, 163, 226));
+}
+
+.quiz-result .qchoice label > span.correct{
+  content     : '✓';
+  display     : block;
+  color       : rgb(153,204,102);
+  font-size   : 1em;
+  text-align  : center;
+  font-weight : bold;
+}
+
+.quiz-result .qchoice label > span.wrong{
+  content     : '✗';display     : block;
+  color       : rgb(253,104,102);
+  font-size   : 1em;
+  text-align  : center;
+  font-weight : bold;
+}
