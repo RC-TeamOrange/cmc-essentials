@@ -35,7 +35,7 @@
                     </ul>
                     
                     <ul class="nav navbar-nav navbar-right">
-                      <li><a href="#">Logged in as: Anonymous</a></li>
+                      <li><a href="#">Logged in as: {{$username}}</a></li>
                     </ul>
                   </div>
                 </div>
