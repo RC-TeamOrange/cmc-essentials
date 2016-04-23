@@ -88,7 +88,7 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 /**Admin routes*/
 /**
 The following routes are used for administrative tasks. Creating, editing and deleting teaching units,
-study materials, sources, quize questions answers.*/
+study materials, sources, quiz questions answers.*/
 
 Route::group(['as'=>'dashboard::', 'middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('/', ['as' => 'showall', function () {
@@ -158,7 +158,7 @@ Route::group(['as'=>'dashboard::', 'middleware' => 'auth', 'prefix' => 'dashboar
             }]);
         });
         
-        //Quize routes.
+        //Quiz routes.
         Route::group(['as'=>'quizzes::', 'prefix' => '{teachingUnitId}/quizzes'], function ($teachingUnitId) {
             Route::get('/', ['as' => 'showall', function ($teachingUnitId) {
                 return view('dashboard.quizzes.index')

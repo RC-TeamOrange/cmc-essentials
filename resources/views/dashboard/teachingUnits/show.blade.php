@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('header')
-    <a href="{{ url('/dashboard') }}">Back to teaching unnits</a>
+    <a href="{{ url('/dashboard') }}">Back to teaching units</a>
     <h2>
         {{ $teachingUnit->title }}
     </h2>
