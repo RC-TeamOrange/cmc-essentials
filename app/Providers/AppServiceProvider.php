@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
 	$view->composer('dashboard.partials.forms.teachingUnit', 'CmcEssentials\Http\Views\Composers\TeachingUnitFormComposer');
+    $view->composer('layouts.master', 'CmcEssentials\Http\Views\Composers\MasterComposer');
     }
 
     /**
