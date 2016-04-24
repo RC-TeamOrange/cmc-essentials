@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('header')
-    <a href="{{ url('/teaching-units') }}">Back to teaching units</a>
+    <a href="{{ url('/teaching-units') }}" style="color: #547477"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp Back to teaching units</a>
     <h2>
         <span id="hms_timer" class="pull-right" data-seconds-left="{{$timeLeft}}"></span><div class="clearfix"></div>
     </h2>

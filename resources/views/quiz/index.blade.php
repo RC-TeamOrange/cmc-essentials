@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('header')
-    <a href="{{ route('teaching-units::study', ['slug'=>$teachingUnit->slug]) }}">Back to study content</a>
-    <h2>
+    <a href="{{ route('teaching-units::study', ['slug'=>$teachingUnit->slug]) }}" style="color: #547477"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp Back to teaching unit</a>
+    <h2
         {{ $teachingUnit->title }} quiz
     </h2>
 @stop
@@ -21,7 +21,7 @@
     @foreach ($quizzes as $quiz)
         <div class="quiz text-center">
             <a href="{{ route('teaching-units::quizzes::questions', ['teachingUnitSlug'=>$teachingUnit->slug, 'quizSlug'=>$quiz->slug]) }}">
-                <div class='btn btn-primary'>Start quiz</div>
+                <div class='btn btn-primary'>Start &nbsp<span class="glyphicon glyphicon-play"></span></div>
             </a>
         </div>
     @endforeach

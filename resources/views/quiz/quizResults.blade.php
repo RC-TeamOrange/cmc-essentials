@@ -50,13 +50,13 @@
 @endforeach
 
 <ul class="nav nav-pills nav-justified">
-    <li><a href="{{ url('teaching-units') }}">All learning materials</a></li>
+    <li><a href="{{ url('teaching-units') }}"><span class="glyphicon glyphicon-home"></span>&nbsp Teaching units</a></li>
     @if ($nextTeachingUnit)
-        <li class="active"><a href="{{ url('teaching-units/'.$nextTeachingUnit->slug) }}">Next learning material</a></li>
+        <li class="active"><a href="{{ url('teaching-units/'.$nextTeachingUnit->slug) }}">Next teaching unit &nbsp<span class="glyphicon glyphicon-triangle-right"></span></a></li>
     @else
-        <li>End of learning</li>
+        <li>End &nbsp<span class="glyphicon glyphicon-stop"></span></li>
     @endif
-    <li><a href="{{ url('/') }}">Exit</a></li>
+    <li><a href="{{ url('/') }}">Exit &nbsp<span class="glyphicon glyphicon-log-out"><span></a></li>
 </ul>
 
 @stop
