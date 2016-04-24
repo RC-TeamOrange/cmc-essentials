@@ -12,9 +12,11 @@ class PaginationPresenter extends BootstrapThreePresenter {
             $next = $this->getNextButton();
             if(strpos($next, 'disabled') !== false){
                 if(!empty($quiz)){
-                    $next = '<a href="'.route('teaching-units::quizzes::results', ['slug'=>$teachingUnit->slug, 'quizSlug' => $quiz->slug]).'" rel="next">Finish/Results</a>';
+                    $next = '<a href="'.route('teaching-units::quizzes::results', ['slug'=>$teachingUnit->slug, 'quizSlug' => $quiz->slug]).'" rel="next">
+                    <div class="btn btn-primary pull-right btn-md "> Show results</div></a>';
                 }elseif(!empty($teachingUnit)){
-                    $next = '<a href="'.route('teaching-units::quizzes::showall', ['slug'=>$teachingUnit->slug]).'" rel="next">Take Quiz</a>';
+                    $next = '<a href="'.route('teaching-units::quizzes::showall', ['slug'=>$teachingUnit->slug]).'" rel="next">
+                    <div class="btn btn-primary pull-right btn-md "> Take quiz</div></a>';
                 }
             }
             return new HtmlString(sprintf(

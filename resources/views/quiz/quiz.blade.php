@@ -2,7 +2,7 @@
 @section('header')
     <a href="{{ route('teaching-units::study', ['slug'=>$teachingUnit->slug]) }}">Back to study content</a>
     <h2>
-        {{ $teachingUnit->title}} Quiz <span id="hms_timer" class="pull-right" data-seconds-left="{{$timeLeft}}"></span><div class="clearfix"></div>
+        {{ $teachingUnit->title}} quiz <span id="hms_timer" class="pull-right" data-seconds-left="{{$timeLeft}}"></span><div class="clearfix"></div>
     </h2>
     
 @stop
