@@ -49,9 +49,7 @@ Route::group(['as'=>'teaching-units::', 'middleware'=>'sessionAuth', 'prefix' =>
         $response = new Response(view('teachingUnits')->with('teachingUnits', TeachingUnit::orderBy('level', 'asc')->get()));
         return $response->withCookie('CmcESession', json_encode(array('username'=> Request::get('username'))), 30);
     }]);
-    Route::get('/{slug}', ['as' => 'show', function ($slug) {
-        return view('teachingUnit')->with('teachingUnit', TeachingUnit::where('slug', $slug)->firstOrFail());
-    }]);
+    Route::get('/{slug}', ['as' => 'show', 'uses' => 'TeachingUnitController@show']);
     Route::get('/{slug}/study', ['as' => 'study', 'uses'=>'StudyMaterialController@showStudyMaterials']);
     Route::post('/{slug}/study', ['as' => 'study', 'uses'=>'StudyMaterialController@ajaxHandeller']);   
  

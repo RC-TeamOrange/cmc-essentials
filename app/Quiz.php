@@ -11,4 +11,8 @@ class Quiz extends Model
     public function teachingUnit() {
         return $this->belongsTo('CmcEssentials\TeachingUnit');
     }
+    
+    public function questions(){
+        return $this->hasMany('CmcEssentials\Question');
+    }
 }
