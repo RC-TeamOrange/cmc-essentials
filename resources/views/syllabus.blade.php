@@ -8,11 +8,11 @@
   <h4>
   <div class="list-group-item active">Teaching unit 1 : Computer Mediated Communication</div>
   <div class="list-group-item">Introduction</div>
-  <div class="list-group-item">Cues Filtered out</div>
+  <div class="list-group-item">Cues filtered out</div>
   <div class="list-group-item">Cues to choose by</div>
-  <div class="list-group-item">Cues Filtered in</div>
+  <div class="list-group-item">Cues filtered in</div>
   <div class="list-group-item">Cues about us</div>
-  <div class="list-group-item">Cues bent and Twisted</div>
+  <div class="list-group-item">Cues bent and twisted</div>
   <div class="list-group-item">Quiz</div>
 
   <div class="list-group-item active">Teaching unit 2 : Theories of CMC</div>
