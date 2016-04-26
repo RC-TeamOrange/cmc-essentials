@@ -34,7 +34,7 @@ Route::get('/session-login', ['as' => 'sessionLogin', function () {
 Route::get('/syllabus', ['as' => 'syllabus', function () {
     return view('syllabus');
 }]);
-Route::group(['as'=>'teaching-units::', 'prefix' => 'teaching-units'], function () {
+Route::group(['as'=>'teaching-units::', 'middleware'=>'sessionAuth', 'prefix' => 'teaching-units'], function () {
     Route::get('/', ['as' => 'showall', function () {
         return view('teachingUnits')->with('teachingUnits', TeachingUnit::orderBy('level', 'asc')->get());
     }]);

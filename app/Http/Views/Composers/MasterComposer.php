@@ -19,6 +19,8 @@ class MasterComposer {
         $username = 'Annonymous';
         if(!empty($sessionData) && !empty($sessionData['username'])){
             $username = $sessionData['username'];
+        }elseif( !empty($this->request->get('username'))){
+            $username = $this->request->get('username');
         }
         return $username;
     }
