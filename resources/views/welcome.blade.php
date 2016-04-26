@@ -17,7 +17,7 @@
 <br>
 
 <div class="text-center">
-<a href="{{ URL::route('syllabus')}}"><div class='btn btn-primary center'>Next &nbsp <span class="glyphicon glyphicon-chevron-right"></span></div></a>
+<a href="{{ URL::route('syllabus')}}"><div class='btn btn-primary center bottom-margin'>Next &nbsp <span class="glyphicon glyphicon-chevron-right"></span></div></a>
 </div>
 
 @stop

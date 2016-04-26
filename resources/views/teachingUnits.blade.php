@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('header')
+    <a href="{{ url('/syllabus') }}" style="color: #547477"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp Back to syllabus</a>
     <h2>
         Teaching units
     </h2>
@@ -12,7 +13,7 @@
                 <div class="thumbnail">
                             <a href="{{ url('teaching-units/'.$teachingUnit->slug) }}" style="color: #547477"><h3>{{ $teachingUnit->title }} &nbsp<span class="glyphicon glyphicon-triangle-right"></span></h3>
                             </a>
-                            <p class="text-justify">{!! $teachingUnit->description !!}</p>
+                            <p>{!! $teachingUnit->description !!}</p>
                         </div>
                 </div>
             </div>

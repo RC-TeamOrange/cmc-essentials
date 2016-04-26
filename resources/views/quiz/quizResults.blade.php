@@ -49,12 +49,10 @@
     <?php $i++; ?>
 @endforeach
 
-<ul class="nav nav-pills nav-justified">
+<ul class="nav nav-pills nav-justified bottom-margin">
     <li><a href="{{ url('teaching-units') }}"><span class="glyphicon glyphicon-home"></span>&nbsp Teaching units</a></li>
     @if ($nextTeachingUnit)
         <li class="active"><a href="{{ url('teaching-units/'.$nextTeachingUnit->slug) }}">Next teaching unit &nbsp<span class="glyphicon glyphicon-triangle-right"></span></a></li>
-    @else
-        <li>End &nbsp<span class="glyphicon glyphicon-stop"></span></li>
     @endif
     <li><a href="{{ url('/') }}">Exit &nbsp<span class="glyphicon glyphicon-log-out"><span></a></li>
 </ul>

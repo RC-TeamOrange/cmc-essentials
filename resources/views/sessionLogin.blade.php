@@ -3,7 +3,7 @@
 <h2>Session login</h2>
 @stop
 @section('content')
-<h4>In order to start the learning start you should enter a username in the form below.</h4>
+<h4>In order to start the learning you should enter a username in the form below.</h4>
 
 {!! Form::open(['url' => $url]) !!}
         <div class="form-group">

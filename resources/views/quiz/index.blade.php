@@ -6,8 +6,8 @@
     </h2>
 @stop
 @section('content')
-    <h4>Test the gained knowledge by answering the following questions.</h4>
-    <div class="alert alert-info" role="alert">Note! Only one answer is correct.</div>
+    <h4>Test the gained knowledge by answering the questions in following the quiz.</h4>
+    <div class="alert alert-info" role="alert">Note! Only one answer is correct. Good luck!</div>
 
     <img src="../../../media/quiz.jpg" class="img-responsive center-block"></img>
     <br>
@@ -21,7 +21,7 @@
     @foreach ($quizzes as $quiz)
         <div class="quiz text-center">
             <a href="{{ route('teaching-units::quizzes::questions', ['teachingUnitSlug'=>$teachingUnit->slug, 'quizSlug'=>$quiz->slug]) }}">
-                <div class='btn btn-primary'>Start &nbsp<span class="glyphicon glyphicon-play"></span></div>
+                <div class='btn btn-primary bottom-margin'>Start &nbsp<span class="glyphicon glyphicon-play"></span></div>
             </a>
         </div>
     @endforeach

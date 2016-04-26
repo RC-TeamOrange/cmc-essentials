@@ -30,7 +30,7 @@
 </div>
 
 <div class="text-center">
-    <a href="{{ URL::route('sessionLogin')}}"><div class='btn btn-primary'>Start &nbsp<span class="glyphicon glyphicon-play"></span></div></a>
+    <a href="{{ URL::route('sessionLogin')}}"><div class='btn btn-primary bottom-margin'>Start &nbsp<span class="glyphicon glyphicon-play"></span></div></a>
 </div>
 
 @stop
