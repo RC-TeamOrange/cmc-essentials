@@ -2,7 +2,8 @@
 
 namespace CmcEssentials\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
+
 use View;
 
 use CmcEssentials\Http\Requests;
@@ -12,7 +13,7 @@ use CmcEssentials\Question;
 
 class TeachingUnitController extends Controller
 {
-	private function showAll(){
+	public function showAll(){
 		return view('teachingUnits')->with('teachingUnits', TeachingUnit::orderBy('level', 'asc')->get());
 	}
     public function show($slug){

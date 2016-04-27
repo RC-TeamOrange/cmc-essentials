@@ -90,26 +90,21 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
  */
 
 Route::group(['as'=>'dashboard::', 'middleware' => 'auth', 'prefix' => 'dashboard'], function () {
-    Route::get('/', ['as' => 'showall', function () {
-        return view('dashboard.index')->with('teachingUnits', TeachingUnit::all());
-    }]);
+	
+    Route::get('/', ['as' => 'showall', 'uses' => 'DashboardController@showAllTeachingUnits']);
+	
     Route::group(['as'=>'teaching-units::', 'prefix' => 'teaching-units'], function () {
-        Route::get('/', ['as' => 'showall', function () {
-            return view('dashboard.index')->with('teachingUnits', TeachingUnit::all());
-        }]);
-        Route::get('create', ['as' => 'create', function () {
-            return view('dashboard.teachingUnits.create');
-        }]);
-        Route::get('{id}', ['as' => 'show', function ($id) {
-            return view('dashboard.teachingUnits.show')->with('teachingUnit', TeachingUnit::findOrFail($id));
-        }]);
-        Route::post('/', ['as' => 'post', function() {
-            $teachingUnit = TeachingUnit::create(Request::all());
-            return redirect('/dashboard/teaching-units/'.$teachingUnit->id)->withSuccess('Teaching unit has been created.');
-        }]);
-        Route::get('{teachingUnit}/edit', ['as' => 'edit', function (TeachingUnit $teachingUnit) {
-            return view('dashboard.teachingUnits.edit')->with('teachingUnit', $teachingUnit);
-        }]);
+        
+		Route::get('/', ['as' => 'showall', 'uses' => 'DashboardController@showAllTeachingUnits']);
+		
+        Route::get('create', ['as' => 'create', 'uses' => 'DashboardController@createTeachingUnit']);
+		
+        Route::get('{id}', ['as' => 'show', 'uses' => 'DashboardController@showTeachingUnit']);
+		
+        Route::post('/', ['as' => 'post', 'uses' => 'DashboardController@postTeachingUnit']);
+		
+        Route::get('{teachingUnit}/edit', ['as' => 'edit', 'uses' => 'DashboardController@editTeachingUnit']);
+		
         Route::put('{teachingUnit}', function(TeachingUnit $teachingUnit) {
             $teachingUnit->update(Request::all());
             return redirect('/dashboard/teaching-units/'.$teachingUnit->id)->withSuccess('Teaching unit has been updated.');
