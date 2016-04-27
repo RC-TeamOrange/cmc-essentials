@@ -12,14 +12,34 @@ use CmcEssentials\Question;
 
 class TeachingUnitController extends Controller
 {
+	private function showAll(){
+		return view('teachingUnits')->with('teachingUnits', TeachingUnit::orderBy('level', 'asc')->get());
+	}
     public function show($slug){
         $teachingUnit = $this->getTeachingUnit($slug, 'slug');
         return view('teachingUnit')
         ->with('teachingUnit', $teachingUnit )
         ->with('numberOfQuestions', $this->getNumberOfQuestions($teachingUnit));
     }
+	
+	public function postSessionLogin(){
+		$response = new Response(view('teachingUnits')->with('teachingUnits', TeachingUnit::orderBy('level', 'asc')->get()));
+        return $response->withCookie('CmcESession', json_encode(array('username'=> Request::get('username'))), 30);
+	}
+	
+	public function sessionLogin(){
+		$sessionData = json_decode(Request::cookie('CmcESession'), true);
+		if(!empty($sessionData['username'])){
+			return redirect('/teaching-units');
+		}
+		return view('sessionLogin')->with('url', route('teaching-units::postSessionLogin'));
+	}
+	
+	public function syllabus(){
+		return view('syllabus');
+	}
     
-    private function getTeachingUnit($id, $property = 'id'){
+    public function getTeachingUnit($id, $property = 'id'){
         switch ($property) {
             case 'id':
                 $teachingUnit = TeachingUnit::findOrFail($id);

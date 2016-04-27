@@ -20,46 +20,45 @@ use CmcEssentials\Answer;
 */
 
 
-/*Application Front end routes*/
+/** 
+ *Application Front end routes
+ */
+ 
+ /** 
+ * Home/Landing page route.
+ */
 Route::get('/', ['as' => 'home', function () {
     return view('welcome');
 }]);
-Route::get('/session-login', ['as' => 'sessionLogin', function () {
-    $sessionData = json_decode(Request::cookie('CmcESession'), true);
-    if(!empty($sessionData['username'])){
-        return redirect('/teaching-units');
-    }
-    return view('sessionLogin')->with('url', route('teaching-units::postSessionLogin'));
-}]);
-Route::get('/syllabus', ['as' => 'syllabus', function () {
-    return view('syllabus');
-}]);
+
+ /** 
+ * Session login page route.
+ */
+Route::get('/session-login', ['as' => 'sessionLogin', 'uses' => 'TeachingUnitController@sessionLogin']);
+
+ /** 
+ * Syllabus page route.
+ */
+Route::get('/syllabus', ['as' => 'syllabus', 'uses' => 'TeachingUnitController@syllabus']);
+
+ /** 
+ * Teaching unit pages route group. Contains all routes within teaching units and also applies common middleware on all routes in the group.
+ */
 Route::group(['as'=>'teaching-units::', 'middleware'=>'sessionAuth', 'prefix' => 'teaching-units'], function () {
-    Route::get('/', ['as' => 'showall', function () {
-        return view('teachingUnits')->with('teachingUnits', TeachingUnit::orderBy('level', 'asc')->get());
-    }]);
-    Route::post('/', ['as' => 'postSessionLogin', function () {
-        /**
-            Ensure that the user provided a valid username, otherwise redirect them back to the session login page.
-        */
-        $username = trim(Request::get('username'));
-        if(strlen($username) < 2 ){
-            return redirect('/session-login')->withSuccess('Username required.');
-        }
-        $response = new Response(view('teachingUnits')->with('teachingUnits', TeachingUnit::orderBy('level', 'asc')->get()));
-        return $response->withCookie('CmcESession', json_encode(array('username'=> Request::get('username'))), 30);
-    }]);
+	
+    Route::get('/', ['as' => 'showall', 'uses' => 'TeachingUnitController@showAll']);
+	
+    Route::post('/', ['as' => 'postSessionLogin', 'uses' => 'TeachingUnitController@postSessionLogin']);
+	
     Route::get('/{slug}', ['as' => 'show', 'uses' => 'TeachingUnitController@show']);
+	
     Route::get('/{slug}/study', ['as' => 'study', 'uses'=>'StudyMaterialController@showStudyMaterials']);
+	
     Route::post('/{slug}/study', ['as' => 'study', 'uses'=>'StudyMaterialController@ajaxHandeller']);   
  
     Route::group(['as'=>'quizzes::', 'prefix' => '{teachingUnitSlug}/quizzes'], function ($teachingUnitSlug) {
-        Route::get('/', ['as' => 'showall', function ($teachingUnitSlug) {
-            $teachingUnit = TeachingUnit::where('slug', $teachingUnitSlug)->firstOrFail();
-            return view('quiz.index')
-            ->with('quizzes', Quiz::where('teaching_unit_id', $teachingUnit->id)->orderBy('level', 'asc')->get())
-            ->with('teachingUnit', TeachingUnit::where('slug', $teachingUnitSlug)->first());
-        }]);
+		
+        Route::get('/', ['as' => 'showall', 'uses' => 'QuizController@showAll']);
         
         Route::get('{quizSlug}/questions', ['as' => 'questions', 'uses'=>'QuizQuestionController@getQuizQuestion']);
         
@@ -84,9 +83,11 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 
 /**Admin routes*/
+
 /**
-The following routes are used for administrative tasks. Creating, editing and deleting teaching units,
-study materials, sources, quiz questions answers.*/
+ * The following routes are used for administrative tasks. Creating, editing and deleting teaching units,
+ * study materials, sources, quiz questions answers.
+ */
 
 Route::group(['as'=>'dashboard::', 'middleware' => 'auth', 'prefix' => 'dashboard'], function () {
     Route::get('/', ['as' => 'showall', function () {
