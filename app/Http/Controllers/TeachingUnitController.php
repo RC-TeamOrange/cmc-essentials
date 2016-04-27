@@ -6,6 +6,8 @@ use Request;
 
 use View;
 
+use Illuminate\Http\Response;
+
 use CmcEssentials\Http\Requests;
 use CmcEssentials\TeachingUnit;
 use CmcEssentials\Quiz;

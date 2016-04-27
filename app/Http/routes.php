@@ -105,51 +105,26 @@ Route::group(['as'=>'dashboard::', 'middleware' => 'auth', 'prefix' => 'dashboar
 		
         Route::get('{teachingUnit}/edit', ['as' => 'edit', 'uses' => 'DashboardController@editTeachingUnit']);
 		
-        Route::put('{teachingUnit}', function(TeachingUnit $teachingUnit) {
-            $teachingUnit->update(Request::all());
-            return redirect('/dashboard/teaching-units/'.$teachingUnit->id)->withSuccess('Teaching unit has been updated.');
-        });
-        Route::get('{teachingUnit}/delete', ['as' => 'delete', function(TeachingUnit $teachingUnit) {
-            $teachingUnit->delete();
-            return redirect('/dashboard/teaching-units')->withSuccess('Teaching unit has been deleted.');
-        }]);
+        Route::put('{teachingUnit}', ['uses' => 'DashboardController@putTeachingUnit']);
+		
+        Route::get('{teachingUnit}/delete', ['as' => 'delete', 'uses' => 'DashboardController@deleteTeachingUnit']);
         
         //Study Material (study content) routes.
         Route::group(['as'=>'study-materials::', 'prefix' => '{teachingUnitId}/study-materials'], function ($teachingUnitId) {
-            Route::get('/', ['as' => 'showall', function ($teachingUnitId) {
-                return view('dashboard.studyMaterials.index')
-                ->with('studyMaterials', StudyMaterial::where('teaching_unit_id', $teachingUnitId)->get())
-                ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
-            }]);
-            Route::get('create', ['as' => 'create', function ($teachingUnitId) {
-                return view('dashboard.studyMaterials.create')->with('teachingUnit', TeachingUnit::find($teachingUnitId));
-            }]);
-            Route::get('{id}', ['as' => 'show', function ($teachingUnitId, $id) {
-                return view('dashboard.studyMaterials.show')
-                ->with('studyMaterial', StudyMaterial::find($id))
-                ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
-            }]);
-            Route::post('/', function($teachingUnitId) {
-                $studyMaterial = StudyMaterial::create(Request::all());
-                $teachingUnit = Request::get('teaching_unit_id', '1');
-                return redirect('/dashboard/teaching-units/'.$teachingUnit.'/study-materials/'.$studyMaterial->id)->withSuccess('Study material has been created.');
-            });
-            Route::get('/{id}/edit', ['as' => 'edit', function ($teachingUnitId, $id) {
-                $studyMaterial = StudyMaterial::find($id);
-                return view('dashboard.studyMaterials.edit')
-                ->with('studyMaterial', $studyMaterial)
-                ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
-            }]);
-            Route::put('/{id}', function($teachingUnitId, $id) {
-                $studyMaterial = StudyMaterial::find($id);
-                $studyMaterial->update(Request::all());
-                return redirect('/dashboard/teaching-units/'.$teachingUnitId.'/study-materials/'.$studyMaterial->id)->withSuccess('Study material has been updated.');
-            });
-            Route::get('/{id}/delete', ['as' => 'delete', function($teachingUnitId, $id) {
-                $studyMaterial = StudyMaterial::find($id);
-                $studyMaterial->delete();
-                return redirect('dashboard/teaching-units/'.$teachingUnitId.'/study-materials')->withSuccess('Study material has been deleted.');
-            }]);
+            
+            Route::get('/', ['as' => 'showall', 'uses' => 'DashboardController@showAllStudyMaterials']);
+            
+            Route::get('create', ['as' => 'create', 'uses' => 'DashboardController@createStudyMaterial']);
+            
+            Route::get('{id}', ['as' => 'show', 'uses' => 'DashboardController@showStudyMaterial']);
+            
+            Route::post('/', ['uses' => 'DashboardController@postStudyMaterial']);
+            
+            Route::get('/{id}/edit', ['as' => 'edit', 'uses' => 'DashboardController@editStudyMaterial']);
+            
+            Route::put('/{id}', ['uses' => 'DashboardController@putStudyMaterial']);
+            
+            Route::get('/{id}/delete', ['as' => 'delete', 'uses' => 'DashboardController@deleteStudyMaterial']);
         });
         
         //Quiz routes.
