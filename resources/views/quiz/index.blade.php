@@ -6,7 +6,7 @@
     </h2>
 @stop
 @section('content')
-    <h4>Test the gained knowledge by answering the questions in following the quiz.</h4>
+    <h4>Test the gained knowledge by answering the questions in the following quiz.</h4>
     <div class="alert alert-info" role="alert">Note! Only one answer is correct. Good luck!</div>
 
     <img src="../../../media/quiz.jpg" class="img-responsive center-block"></img>
