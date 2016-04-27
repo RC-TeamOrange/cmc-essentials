@@ -71,14 +71,18 @@ Route::group(['as'=>'teaching-units::', 'middleware'=>'sessionAuth', 'prefix' =>
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
+
 Route::post('auth/login', 'Auth\AuthController@postLogin');
+
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
 Route::get('/login', function () {
     return redirect('auth/login');
 });
 
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
+
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 
@@ -129,147 +133,54 @@ Route::group(['as'=>'dashboard::', 'middleware' => 'auth', 'prefix' => 'dashboar
         
         //Quiz routes.
         Route::group(['as'=>'quizzes::', 'prefix' => '{teachingUnitId}/quizzes'], function ($teachingUnitId) {
-            Route::get('/', ['as' => 'showall', function ($teachingUnitId) {
-                return view('dashboard.quizzes.index')
-                ->with('quizzes', Quiz::where('teaching_unit_id', $teachingUnitId)->get())
-                ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
-            }]);
-            Route::get('create', ['as' => 'create', function ($teachingUnitId) {
-                return view('dashboard.create')
-                ->with('teachingUnit', TeachingUnit::find($teachingUnitId))
-                ->with('title', 'Create new Quiz')
-                ->with('partial', 'quiz')
-                ->with('url', 'dashboard/teaching-units/'.$teachingUnitId.'/quizzes');
-            }]);
-            Route::get('{id}', ['as' => 'show', function ($teachingUnitId, $id) {
-                return view('dashboard.quizzes.show')
-                ->with('quiz', Quiz::find($id))
-                ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
-            }]);
-            Route::post('/', function($teachingUnitId) {
-                $quiz = Quiz::create(Request::all());
-                $teachingUnit = Request::get('teaching_unit_id');
-                return redirect('/dashboard/teaching-units/'.$teachingUnit.'/quizzes/'.$quiz->id)->withSuccess('Quiz has been created.');
-            });
-            Route::get('/{id}/edit', ['as' => 'edit', function ($teachingUnitId, $id) {
-                $quiz = Quiz::find($id);
-                return view('dashboard.edit')
-                ->with('objModel', $quiz)
-                ->with('title', 'Edit Quiz')
-                ->with('partial', 'quiz')
-                ->with('url', 'dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$id)
-                ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
-            }]);
-            Route::put('/{id}', function($teachingUnitId, $id) {
-                $quiz = Quiz::find($id);
-                $quiz->update(Request::all());
-                return redirect('/dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quiz->id)->withSuccess('Quiz has been updated.');
-            });
-            Route::get('/{id}/delete', ['as' => 'delete', function($teachingUnitId, $id) {
-                $quiz = Quiz::find($id);
-                $quiz->delete();
-                return redirect('dashboard/teaching-units/'.$teachingUnitId.'/quizzes')->withSuccess('Quiz has been deleted.');
-            }]);
+            
+            Route::get('/', ['as' => 'showall', 'uses' => 'DashboardController@showAllQuizzes']);
+            
+            Route::get('create', ['as' => 'create', 'uses' => 'DashboardController@createQuiz']);
+            
+            Route::get('{id}', ['as' => 'show', 'uses' => 'DashboardController@showQuiz']);
+            
+            Route::post('/', ['uses' => 'DashboardController@postQuiz']);
+            
+            Route::get('/{id}/edit', ['as' => 'edit', 'uses' => 'DashboardController@editQuiz']);
+            
+            Route::put('/{id}', ['uses' => 'DashboardController@putQuiz']);
+            
+            Route::get('/{id}/delete', ['as' => 'delete', 'uses' => 'DashboardController@deleteQuiz']);
             
             //Questions routes.
             Route::group(['as'=>'questions::', 'prefix' => '{quizId}/questions'], function ($quizId) {
-                Route::get('/', ['as' => 'showall', function ($teachingUnitId, $quizId) {
-                    return view('dashboard.questions.index')
-                    ->with('questions', Question::where('quiz_id', $quizId)->get())
-                    ->with('quiz', Quiz::find($quizId))
-                    ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
-                }]);
-                Route::get('create', ['as' => 'create', function ($teachingUnitId, $quizId) {
-                    return view('dashboard.create')
-                    ->with('quiz', Quiz::find($quizId))
-                    ->with('teachingUnit', TeachingUnit::find($teachingUnitId))
-                    ->with('title', 'Create question')
-                    ->with('partial', 'question')
-                    ->with('url', 'dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions');
-                }]);
-                Route::get('{questionId}', ['as' => 'show', function ($teachingUnitId, $quizId, $questionId) {
-                    return view('dashboard.questions.show')
-                    ->with('question', Question::find($questionId))
-                    ->with('quiz', Quiz::find($quizId))
-                    ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
-                }]);
-                Route::post('/', function($teachingUnitId, $quizId) {
-                    $question = Question::create(Request::all());
-                    $quizId = Request::get('quiz_id');
-                    return redirect('/dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions/'.$question->id)->withSuccess('Question has been created.');
-                });
-                Route::get('/{questionId}/edit', ['as' => 'edit', function ($teachingUnitId, $quizId, $questionId) {
-                    $question = Question::find($questionId);
-                    return view('dashboard.edit')
-                    ->with('objModel', $question)
-                    ->with('title', 'Edit Question')
-                    ->with('partial', 'question')
-                    ->with('url', 'dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions/'.$questionId)
-                    ->with('quiz', Quiz::find($quizId))
-                    ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
-                }]);
-                Route::put('/{questionId}', function($teachingUnitId, $quizId, $questionId) {
-                    $question = Question::find($questionId);
-                    $question->update(Request::all());
-                    return redirect('/dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions/'.$question->id)->withSuccess('Question has been updated.');
-                });
-                Route::get('/{questionId}/delete', ['as' => 'delete', function($teachingUnitId, $quizId, $questionId) {
-                    $question = Question::find($questionId);
-                    $question->delete();
-                    return redirect('dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions')->withSuccess('Question has been deleted.');
-                }]);
+                
+                Route::get('/', ['as' => 'showall', 'uses' => 'DashboardController@showAllQuestions']);
+                
+                Route::get('create', ['as' => 'create', 'uses' => 'DashboardController@createQuestion']);
+                
+                Route::get('{questionId}', ['as' => 'show', 'uses' => 'DashboardController@showQuestion']);
+                
+                Route::post('/', ['uses' => 'DashboardController@postQuestion']);
+                
+                Route::get('/{questionId}/edit', ['as' => 'edit', 'uses' => 'DashboardController@editQuestion']);
+                
+                Route::put('/{questionId}', ['uses' => 'DashboardController@putQuestion']);
+                
+                Route::get('/{questionId}/delete', ['as' => 'delete', 'uses' => 'DashboardController@deleteQuestion']);
                 
                 //Answer routes. 
                 Route::group(['as'=>'answers::', 'prefix' => '{questionId}/answers'], function ($questionId) {
-                    Route::get('/', ['as' => 'showall', function ($teachingUnitId, $quizId, $questionId) {
-                        return view('dashboard.answers.index')
-                        ->with('answers', Answer::where('question_id', $questionId)->get())
-                        ->with('question', Question::find($questionId))
-                        ->with('quiz', Quiz::find($quizId))
-                        ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
-                    }]);
-                    Route::get('create', ['as' => 'create', function ($teachingUnitId, $quizId, $questionId) {
-                        return view('dashboard.create')
-                        ->with('question', Question::find($questionId))
-                        ->with('quiz', Quiz::find($quizId))
-                        ->with('teachingUnit', TeachingUnit::find($teachingUnitId))
-                        ->with('title', 'Create answer choice')
-                        ->with('partial', 'answer')
-                        ->with('url', 'dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions/'.$questionId.'/answers');
-                    }]);
-                    Route::get('{answerId}', ['as' => 'show', function ($teachingUnitId, $quizId, $questionId, $answerId) {
-                        return view('dashboard.answers.show')
-                        ->with('answer', Answer::find($answerId))
-                        ->with('question', Question::find($questionId))
-                        ->with('quiz', Quiz::find($quizId))
-                        ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
-                    }]);
-                    Route::post('/', function($teachingUnitId, $quizId, $questionId) {
-                        $answer = Answer::create(Request::all());
-                        $question = Request::get('question_id');
-                        return redirect('/dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions/'.$questionId.'/answers/'.$answer->id)->withSuccess('Answer choice has been created.');
-                    });
-                    Route::get('/{answerId}/edit', ['as' => 'edit', function ($teachingUnitId, $quizId, $questionId, $answerId) {
-                        $answer = Answer::find($answerId);
-                        return view('dashboard.edit')
-                        ->with('objModel', $answer)
-                        ->with('title', 'Edit Answer Choice')
-                        ->with('partial', 'answer')
-                        ->with('url', 'dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions/'.$questionId.'/answers/'.$answerId)
-                        ->with('question', Question::find($questionId))
-                        ->with('quiz', Quiz::find($quizId))
-                        ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
-                    }]);
-                    Route::put('/{answerId}', function($teachingUnitId, $quizId, $questionId, $answerId) {
-                        $answer = Answer::find($answerId);
-                        $answer->update(Request::all());
-                        return redirect('/dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions/'.$questionId.'/answers/'.$answer->id)->withSuccess('Answer choice has been updated.');
-                    });
-                    Route::get('/{answerId}/delete', ['as' => 'delete', function($teachingUnitId, $quizId, $questionId, $answerId) {
-                        $answer = Answer::find($answerId);
-                        $answer->delete();
-                        return redirect('dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions/'.$questionId.'/answers')->withSuccess('Answer choice has been deleted.');
-                    }]);
+                    
+                    Route::get('/', ['as' => 'showall', 'uses' => 'DashboardController@showAllAnswers']);
+                    
+                    Route::get('create', ['as' => 'create', 'uses' => 'DashboardController@createAnswer']);
+                    
+                    Route::get('{answerId}', ['as' => 'show', 'uses' => 'DashboardController@showAnswer']);
+                    
+                    Route::post('/', ['uses' => 'DashboardController@postAnswer']);
+                    
+                    Route::get('/{answerId}/edit', ['as' => 'edit', 'uses' => 'DashboardController@editAnswer']);
+                    
+                    Route::put('/{answerId}', ['uses' => 'DashboardController@putAnswer']);
+                    
+                    Route::get('/{answerId}/delete', ['as' => 'delete', 'uses' => 'DashboardController@deleteAnswer']);
                 });
             });
         });
