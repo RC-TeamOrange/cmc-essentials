@@ -1,0 +1,24 @@
+<?php
+
+namespace CmcEssentials\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use CmcEssentials\Http\Requests;
+use CmcEssentials\TeachingUnit;
+use CmcEssentials\Quiz;
+use CmcEssentials\Question;
+
+class QuizController extends Controller
+{
+    public function showAll($teachingUnitSlug){
+		$teachingUnitController = new TeachingUnitController();
+		$teachingUnit = $teachingUnitController->getTeachingUnit($teachingUnitSlug, 'slug');
+		
+		//$teachingUnit = TeachingUnit::where('slug', $teachingUnitSlug)->firstOrFail();
+        return view('quiz.index')
+        ->with('quizzes', Quiz::where('teaching_unit_id', $teachingUnit->id)->orderBy('level', 'asc')->get())
+        ->with('teachingUnit', TeachingUnit::where('slug', $teachingUnitSlug)->first());
+	}
+}
+
