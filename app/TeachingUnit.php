@@ -11,4 +11,8 @@ class TeachingUnit extends Model
     public function teachingUnit() {
         return $this->hasMany('CmcEssentials\StudyMaterial', 'CmcEssentials\Source');
     }
+    
+    public function quizzes(){
+        return $this->hasMany('CmcEssentials\Quiz');
+    }
 }
