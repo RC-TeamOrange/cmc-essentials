@@ -13,7 +13,7 @@
     <br>
 
     <div class="caption text-center">
-    Source: http://granitegrok.com/blog/2013/07/republican-vote-stealer/attachment/question-mark
+    Source: <a> http://granitegrok.com/blog/2013/07/republican-vote-stealer/attachment/question-mark </a>
     </div>
 
     <br>
