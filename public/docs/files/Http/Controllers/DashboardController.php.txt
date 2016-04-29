@@ -414,6 +414,15 @@ class DashboardController extends Controller
                         ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
 	}
 	
+	/**
+	* Displays form for creating an answer choice. 
+	*
+	* @param int $teachingUnitId The id of the teaching unit to which the answers belongs.
+	* @param int $quizId The id of the quiz to which the answers belong.
+	* @param int $questionId The id of the question to which the answers belong.
+	*
+	* @return Illuminate\Contracts\View\View Form for creating and answer choice. Uses the blade view: dashboard.create
+	*/
 	public function createAnswer($teachingUnitId, $quizId, $questionId){
 		return view('dashboard.create')
                         ->with('question', Question::find($questionId))
@@ -424,6 +433,16 @@ class DashboardController extends Controller
                         ->with('url', 'dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions/'.$questionId.'/answers');
 	}
 	
+	/**
+	* Displays a single answer, with options for editing and deleting. 
+	*
+	* @param int $teachingUnitId The id of the teaching unit to which the answers belongs.
+	* @param int $quizId The id of the quiz to which the answers belong.
+	* @param int $questionId The id of the question to which the answers belong.
+	* @param int $answerId The id of the answer choice.
+	*
+	* @return Illuminate\Contracts\View\View Single Answer page. Uses the blade view: dashboard.answers.show
+	*/
 	public function showAnswer($teachingUnitId, $quizId, $questionId, $answerId){
 		return view('dashboard.answers.show')
                         ->with('answer', Answer::find($answerId))
@@ -432,12 +451,31 @@ class DashboardController extends Controller
                         ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
 	}
 	
+	/**
+	* Processes POST request to create and persist an answer choice. 
+	* Redirects the user to the created answer page with a success message.
+	*
+	* @param int $teachingUnitId The id of the teaching unit to which the answers belongs.
+	* @param int $quizId The id of the quiz to which the answers belong.
+	* @param int $questionId The id of the question to which the answers belong.
+	*
+	*/
 	public function postAnswer($teachingUnitId, $quizId, $questionId){
 		$answer = Answer::create(Request::all());
                         $question = Request::get('question_id');
                         return redirect('/dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions/'.$questionId.'/answers/'.$answer->id)->withSuccess('Answer choice has been created.');
 	}
 	
+	/**
+	* Displays a form for editing an answer choice. 
+	*
+	* @param int $teachingUnitId The id of the teaching unit to which the answers belongs.
+	* @param int $quizId The id of the quiz to which the answers belong.
+	* @param int $questionId The id of the question to which the answers belong.
+	* @param int $answerId The id of the answer choice.
+	*
+	* @return Illuminate\Contracts\View\View Answer editing form. Uses the blade view: dashboard.edit
+	*/
 	public function editAnswer($teachingUnitId, $quizId, $questionId, $answerId){
 		$answer = Answer::find($answerId);
                         return view('dashboard.edit')
@@ -450,12 +488,32 @@ class DashboardController extends Controller
                         ->with('teachingUnit', TeachingUnit::find($teachingUnitId));
 	}
 	
+	/**
+	* Processes put request to persist an edited answer.
+	* Redirects the user to the edited answer page with a success message. 
+	*
+	* @param int $teachingUnitId The id of the teaching unit to which the answers belongs.
+	* @param int $quizId The id of the quiz to which the answers belong.
+	* @param int $questionId The id of the question to which the answers belong.
+	* @param int $answerId The id of the answer choice.
+	*
+	*/
 	public function putAnswer($teachingUnitId, $quizId, $questionId, $answerId){
 		$answer = Answer::find($answerId);
                         $answer->update(Request::all());
                         return redirect('/dashboard/teaching-units/'.$teachingUnitId.'/quizzes/'.$quizId.'/questions/'.$questionId.'/answers/'.$answer->id)->withSuccess('Answer choice has been updated.');
 	}
 	
+	/**
+	* Deletes an answer option.
+	* Redirects the user to the answers page with a success message. 
+	*
+	* @param int $teachingUnitId The id of the teaching unit to which the answers belongs.
+	* @param int $quizId The id of the quiz to which the answers belong.
+	* @param int $questionId The id of the question to which the answers belong.
+	* @param int $answerId The id of the answer choice.
+	*
+	*/
 	public function deleteAnswer($teachingUnitId, $quizId, $questionId, $answerId){
 		$answer = Answer::find($answerId);
                         $answer->delete();

@@ -13,18 +13,35 @@ use CmcEssentials\Quiz;
 use CmcEssentials\Question;
 use CmcEssentials\Answer;
 
+/**
+* This class contains methods for processing and displaying quiz results. 
+*/
 class QuizResultsController extends Controller
 {
+    /** 
+    * Processes and returns view of a quiz result. 
+    * 
+    * @param string $teachingUnitSlug The slug of the teaching unit to which the quiz belongs.
+    * @param string $quizSlug The slug of the quiz. 
+    *
+    * @return Illuminate\Contracts\View\View The quiz result view, uses blade view: quiz.quizResults
+    */
     public function getQuizResults($teachingUnitSlug, $quizSlug)
     {
         $teachingUnit = TeachingUnit::where('slug', $teachingUnitSlug)->first();
         $nextTeachingUnit = TeachingUnit::where('level', '>', $teachingUnit->level)->orderBy('level', 'asc')->first();
         $quiz = Quiz::where('slug', $quizSlug)->first();
+        
+        //Get all questions for the quiz from the databse.
         $questions = Question::where('quiz_id', $quiz->id)->orderBy('id', 'asc')->get();
+        
+        //Loop through all questions and get their answer choices. Include this as a property to the question.
         foreach ($questions as $key => $question) {
             $answers = Answer::where('question_id', $question->id)->orderBy('rank', 'asc')->get();
             $questions[$key]->answers = $answers;
         }
+        
+        //Read and decode the selected quiz choices from the cookie and pass it to the view file.
         $quizChoices = json_decode(Request::cookie('quizeChoices'), true);
         $view = view('quiz.quizResults')
         ->with('teachingUnit', $teachingUnit)
