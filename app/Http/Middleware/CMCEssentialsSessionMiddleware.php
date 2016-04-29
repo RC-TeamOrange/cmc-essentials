@@ -3,7 +3,10 @@
 namespace CmcEssentials\Http\Middleware;
 
 use Closure;
-
+/**
+* Session management middleware for the web app. 
+* This middleware provides check for session login and is applied to all routes that routes that require session login.
+*/
 class CMCEssentialsSessionMiddleware
 {
     
@@ -24,6 +27,13 @@ class CMCEssentialsSessionMiddleware
         }
     }
     
+    /**
+     * Check if username is set for this session. If not redirect to session login page. 
+     * Returns boolean. true if username is set and false otherwise. 
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return boolean
+     */
     private function issetUsername($request){
         $sessionData = json_decode($request->cookie('CmcESession'), true);
         if(!empty($sessionData) && !empty($sessionData['username'])){
