@@ -3,7 +3,7 @@
 <h2>Session login</h2>
 @stop
 @section('content')
-<h4>In order to start the learning you should enter a username in the form below.</h4>
+<h4>You may personalize this session by providing a username.</h4>
 
 {!! Form::open(['url' => $url]) !!}
         <div class="form-group">
@@ -14,6 +14,14 @@
         {!! Form::submit('Start session', ['class' => 'btn btn-primary']) !!}
 {!! Form::close() !!}
 
+{!! Form::open(['url' => $url]) !!}
+        <div class="form-group">
+            <div class="form-controls">
+                {!! Form::hidden('username', 'Annonymous') !!}
+            </div>
+        </div>
+        {!! Form::submit('Skip Login', ['class' => 'btn btn-primary']) !!}
+{!! Form::close() !!}
 <br>
 
 <div class="alert alert-info" role="alert">Note! If you close the web browser during learning the progress will be lost.</div>
