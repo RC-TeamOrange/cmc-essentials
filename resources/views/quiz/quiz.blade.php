@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('header')
-    <a href="{{ route('teaching-units::study', ['slug'=>$teachingUnit->slug]) }}">Back to study content</a>
+    <a href="{{ route('teaching-units::study', ['slug'=>$teachingUnit->slug]) }}" style="color: #547477"><span class="glyphicon glyphicon-arrow-left"></span>&nbspBack to study content</a>
     <h2>
         {{ $teachingUnit->title}} Quiz <span class="pull-right" >Time left: <span id="hms_timer" data-seconds-left="{{$timeLeft}}"></span></span><div class="clearfix"></div>
     </h2>
