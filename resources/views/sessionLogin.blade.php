@@ -11,7 +11,7 @@
                 {!! Form::text('username', null, ['class' => 'form-control', 'placeholder'=>'Username', 'autocomplete'=>'off']) !!}
             </div>
         </div>
-        {!! Form::submit('Start session', ['class' => 'btn btn-primary']) !!}
+        {!! Form::submit('Start session', ['class' => 'btn btn-raised btn-info center']) !!}
 {!! Form::close() !!}
 
 {!! Form::open(['url' => $url]) !!}
@@ -20,7 +20,7 @@
                 {!! Form::hidden('username', 'Annonymous') !!}
             </div>
         </div>
-        {!! Form::submit('Skip Login', ['class' => 'btn btn-primary']) !!}
+        {!! Form::submit('Skip Login', ['class' => 'btn btn-raised btn-info center']) !!}
 {!! Form::close() !!}
 <br>
 

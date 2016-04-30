@@ -7,17 +7,15 @@
 @stop
     @section('content')
 
-    <div class="row">
-      <div class="container">
-        <div class="thumbnail">
-          <div class="caption">
+    <div class="panel panel-default">
+      <div class="panel-body">
             <h3>{{ $teachingUnit->title }}</h3>
             <div class="text-justify"><h4>Summary of content: {!! $teachingUnit->description !!}</h4></div>
             <div><h4>Duration: {{ $teachingUnit->duration }} minutes</h4></div>
             <div><h4>Number of questions:{{ $numberOfQuestions }}</h4></div>
-            <p><div class="text-center"><a href="{{ route('teaching-units::study', ['slug'=>$teachingUnit->slug]) }}" class="btn btn-primary button-margin" role="button">Start &nbsp<span class="glyphicon glyphicon-play"></span></a>
-          </div>
-        </div>
+            <div class="text-center">
+              <a href="{{ route('teaching-units::study', ['slug'=>$teachingUnit->slug]) }}" class="app-nav-btn"><div class='btn-raised btn-info center bottom-margin'>Start &nbsp <span class="glyphicon glyphicon-play"></span></div></a>
+            </div>
       </div>
     </div>
 

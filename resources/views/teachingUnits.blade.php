@@ -7,17 +7,11 @@
 @stop
     @section('content')
     @foreach ($teachingUnits as $teachingUnit)
-
-        <div class="row">
-            <div class="container">
-                <div class="thumbnail">
-                            <a href="{{ url('teaching-units/'.$teachingUnit->slug) }}" style="color: #547477"><h3>{{ $teachingUnit->title }} &nbsp<span class="glyphicon glyphicon-triangle-right"></span></h3>
-                            </a>
-                            <p>{!! $teachingUnit->description !!}</p>
-                        </div>
-                </div>
-            </div>
-        </div>
-
+        
+        <div class="jumbotron">
+            <h2><a href="{{ url('teaching-units/'.$teachingUnit->slug) }}" style="color: #547477">{{ $teachingUnit->title }}</a></h2>
+            {!! $teachingUnit->description !!}
+            <p><a href="{{ url('teaching-units/'.$teachingUnit->slug) }}" class="btn btn-primary btn-lg">Select<div class="ripple-container"></div></a></p>
+          </div>
     @endforeach
 @stop

@@ -19,10 +19,8 @@
     <br>
 
     @foreach ($quizzes as $quiz)
-        <div class="quiz text-center">
-            <a href="{{ route('teaching-units::quizzes::questions', ['teachingUnitSlug'=>$teachingUnit->slug, 'quizSlug'=>$quiz->slug]) }}">
-                <div class='btn btn-primary bottom-margin'>Start &nbsp<span class="glyphicon glyphicon-play"></span></div>
-            </a>
-        </div>
+    <div class="quiz text-center">
+        <a href="{{ route('teaching-units::quizzes::questions', ['teachingUnitSlug'=>$teachingUnit->slug, 'quizSlug'=>$quiz->slug]) }}" class="app-nav-btn"><div class='btn-raised btn-info center bottom-margin'>Start &nbsp<span class="glyphicon glyphicon-play"></span></div></a>
+    </div>
     @endforeach
 @stop

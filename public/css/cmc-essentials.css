@@ -52,7 +52,7 @@ body *{
   height           : 1.3em;
   margin           : 0.25em 0.5em 0.25em 0.25em;
   border           : 0.0625em solid rgb(192,192,192);
-  border-radius    : 0;
+  border-radius    : 50%;
   background       : rgb(224,224,224);
   background-image :    -moz-linear-gradient(rgb(240,240,240),rgb(224,224,224));
   background-image :     -ms-linear-gradient(rgb(240,240,240),rgb(224,224,224));
@@ -75,7 +75,7 @@ body *{
   height           : 0.8em;
   margin           : 0.2em;
   border           : 0.0625em solid rgb(37, 120, 209);
-  border-radius    : 0;
+  border-radius    : 50%;
   background       : rgb(37, 120, 209);
   background-image :    -moz-linear-gradient(rgb(39, 128, 227),rgb(104, 163, 226));
   background-image :     -ms-linear-gradient(rgb(39, 128, 227),rgb(104, 163, 226));
@@ -104,3 +104,46 @@ body *{
 body > .container{
   margin-top: 60px;
 }
+
+a.app-nav-btn .btn-raised{
+	padding: 20px;
+}
+a.app-nav-btn, a.app-nav-btn:hover, a.app-nav-btn:active{
+	text-decoration:none !important;
+}
+
+footer{
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+
+.image-credits{
+  font-style: italic;
+  font-size: .8em;
+  color: #ccc !important;
+  float: right;
+}
+
+/*Responsiveness*/
+/* Large desktop */
+@media (min-width: 1200px) { 
+  
+ }
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { 
+  
+ }
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) { 
+  
+ }
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) { 
+  body > .container{
+    margin-top: 30px;
+  }
+ }
