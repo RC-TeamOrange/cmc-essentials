@@ -1,11 +1,13 @@
 
 @foreach ($studyMaterials as $studyMaterial)
     <article>
+        <h3 class="slide-progress"><span class="desc title">Reading card:</span><span class="count num current">{{ $studyMaterials->currentPage() }}</span><span class="desc separator"> of </span><span class="count num total">{{ $studyMaterials->total() }}</span></h3>
         <h2>{{ $studyMaterial->title }}</h2>
-        <div class="text-justify"> {!! $studyMaterial->description !!} </div>
+        {!! $studyMaterial->description !!}
     </article>
 @endforeach
    
 <div class="pager">
 {!! with(new CmcEssentials\PaginationPresenter($studyMaterials))->render($teachingUnit) !!}
+
 </div>
