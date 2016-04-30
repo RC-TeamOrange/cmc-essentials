@@ -8,6 +8,7 @@
         <?php 
             $i = 1; 
             $lables = array('A', 'B', 'C', 'D', 'E', 'F');
+            $total = 0; $score = 0;
         ?>
         @foreach ($questions as $question)
             <div class="question">
@@ -22,7 +23,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <?php $k=0; $total = 0; $score = 0; ?>
+                    <?php $k=0; ?>
                     @foreach ($question->answers as $answer)
                             <tr>
                                 <th class="qlabel">{{$lables[$k]}}</th>
@@ -44,12 +45,12 @@
                                 @endif
                                 
                             </tr>
-                            <?php $k++; $total++; ?>
+                            <?php $k++; ?>
                     @endforeach
                 </tbody>
                 </table>
             </div>
-            <?php $i++; ?>
+            <?php $i++; $total++; ?>
         @endforeach
         <div class="quiz-score text-center"><h3>You scored {{$score}}/{{$total}}</h3></div>
     </div>
