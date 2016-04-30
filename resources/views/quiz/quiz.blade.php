@@ -93,7 +93,12 @@
             jQuery(function(){
                 jQuery('#hms_timer').startTimer({
                     onComplete: function(element){
-                        window.location.replace("{{ url('/teaching-units') }}");
+                        setTimeout( function(){
+                            window.location.replace("{{ route('teaching-units::quizzes::results', ['slug'=>$teachingUnit->slug, 'quizSlug' => $quiz->slug]) }}");
+                         }, 2000);
+                        bootbox.alert("Time is up, You will now be redirected to your quiz results.", function() {
+                            window.location.replace("{{ route('teaching-units::quizzes::results', ['slug'=>$teachingUnit->slug, 'quizSlug' => $quiz->slug]) }}");
+                        });
                     },
                     onTimeLeft: function(timeLeft){
                         updateTimer(timeLeft);

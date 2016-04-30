@@ -84,7 +84,13 @@
             jQuery(function(){
                 jQuery('#hms_timer').startTimer({
                     onComplete: function(element){
-                        window.location.replace("{{ url('/teaching-units') }}");
+                        setTimeout( function(){
+                            window.location.replace("{{ url('/teaching-units') }}");
+                         }, 3000);
+                        bootbox.alert("Time is up, You will now be redirected back to teaching unit selection page.", function() {
+                            window.location.replace("{{ url('/teaching-units') }}");
+                        });
+                        
                     },
 		    onTimeLeft: function(timeLeft){
                         updateTimer(timeLeft);
