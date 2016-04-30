@@ -100,6 +100,7 @@ body *{
   text-align  : center;
   font-weight : bold;
 }
-.bottom-margin{
-	margin-bottom: 50px;
+
+body > .container{
+  margin-top: 60px;
 }
