@@ -90,6 +90,12 @@ class QuizQuestionController extends Controller
     {
         if(Request::ajax()){
             $teachingUnit = TeachingUnit::where('slug', $teachingUnitSlug)->first();
+            if(Request::get("action") == "updateTimer"){
+                $cookieData = json_decode(Request::cookie('CmcESession'), true);
+            $cookieData["timer"][$teachingUnit->id] =  Request::get("timeLeft");
+            $response = new Response();
+            return $response->withCookie('CmcESession', json_encode($cookieData), 180);
+            }
             $quiz = Quiz::where('slug', $quizSlug)->first();
             $questions = Question::where('quiz_id', $quiz->id)->orderBy('id', 'asc')->paginate(1);
             $question= $questions[0];

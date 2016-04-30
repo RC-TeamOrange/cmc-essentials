@@ -1,8 +1,8 @@
 @extends('layouts.master')
 @section('header')
-    <a href="{{ route('teaching-units::study', ['slug'=>$teachingUnit->slug]) }}" style="color:#547477"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp Back to teaching unit</a>
+    <a href="{{ route('teaching-units::study', ['slug'=>$teachingUnit->slug]) }}">Back to study content</a>
     <h2>
-        {{ $teachingUnit->title}} quiz <span id="hms_timer" class="pull-right" data-seconds-left="{{$timeLeft}}"></span><div class="clearfix"></div>
+        {{ $teachingUnit->title}} Quiz <span class="pull-right" >Time left: <span id="hms_timer" data-seconds-left="{{$timeLeft}}"></span></span><div class="clearfix"></div>
     </h2>
     
 @stop
@@ -19,13 +19,13 @@
                 if (page == Number.NaN || page <= 0) {
                     return false;
                 } else {
-                    getStudyMaterial(page);
+                    getQuestion(page);
                 }
             }
         });
         jQuery(document).ready(function() {
             jQuery(document).on('click', '.pagination li a', function (e) {
-                getStudyMaterial(jQuery(this).attr('href').split('page=')[1]);
+                getQuestion(jQuery(this).attr('href').split('page=')[1]);
                 e.preventDefault();
             });
             jQuery("input").each(function(){
@@ -38,10 +38,10 @@
             });
         });
          jQuery.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+                 headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             }
+         });
         function saveChoice(choice){
             jQuery.ajaxSetup({
                 headers: {
@@ -54,23 +54,21 @@
                 dataType: 'json',
                 data:{action: "saveChoice", choice: choice, question: jQuery("#questionId").val()}
             }).done(function (data) {
-                console.log(data);
             }).fail(function (data) {
                 jQuery('.quiz-question').html(data.responseText);
             });
         }
         function updateTimer(timeLeft){
-            jQuery.ajax({
-                type: "POST",
-                dataType: 'json',
-                data:{action: "updateTimer", timeLeft: timeLeft}
-            }).done(function (data) {
-                console.log(data);
-            }).fail(function (data) {
-                console.log(data);
-            });
-        }
-        function getStudyMaterial(page) {
+             jQuery.ajax({
+                 type: "POST",
+                 dataType: 'json',
+                 data:{action: "updateTimer", timeLeft: timeLeft}
+             }).done(function (data) {
+             }).fail(function (data) {
+             });
+         }
+ 
+        function getQuestion(page) {
             jQuery.ajax({
                 type: "GET",
                 url : '?page=' + page,
@@ -98,7 +96,7 @@
                         window.location.replace("{{ url('/teaching-units') }}");
                     },
                     onTimeLeft: function(timeLeft){
-			updateTimer(timeLeft);
+                        updateTimer(timeLeft);
                     }
                 });
             });

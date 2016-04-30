@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('header')
     <a href="{{ url('/teaching-units') }}" style="color: #547477"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp Back to teaching units</a>
-    <h2>{{ $teachingUnit->title }} <span id="hms_timer" class="pull-right" data-seconds-left="{{$timeLeft}}"></span><div class="clearfix"></div>
+    <h2>{{ $teachingUnit->title }} <span class="pull-right" >Time left: <span id="hms_timer" data-seconds-left="{{$timeLeft}}"></span></span><div class="clearfix"></div>
     </h2>
     
 @stop
@@ -74,9 +74,7 @@
                 dataType: 'json',
                 data:{action: "updateTimer", timeLeft: timeLeft}
             }).done(function (data) {
-                console.log(data);
             }).fail(function (data) {
-                console.log(data);
             });
         }
         
