@@ -9,11 +9,11 @@
     <h4>Test the gained knowledge by answering the questions in the following quiz.</h4>
     <div class="alert alert-info" role="alert">Note! Only one answer is correct. Good luck!</div>
 
-    <img src="../../../media/quiz.jpg" class="img-responsive center-block"></img>
+    <img src="../../../media/quiz.png" class="img-responsive center-block"></img>
     <br>
 
     <div class="caption text-center">
-    Source: <a> http://granitegrok.com/blog/2013/07/republican-vote-stealer/attachment/question-mark </a>
+        <span class="image-credits"><a href="http://granitegrok.com/blog/2013/07/republican-vote-stealer/attachment/question-mark">Image credits: granitegrok.com</a></span>
     </div>
 
     <br>

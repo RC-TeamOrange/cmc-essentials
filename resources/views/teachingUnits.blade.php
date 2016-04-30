@@ -10,7 +10,7 @@
         
         <div class="jumbotron">
             <h2><a href="{{ url('teaching-units/'.$teachingUnit->slug) }}" style="color: #547477">{{ $teachingUnit->title }}</a></h2>
-            {!! $teachingUnit->description !!}
+            <!-- {!! $teachingUnit->description !!} -->
             <p><a href="{{ url('teaching-units/'.$teachingUnit->slug) }}" class="btn btn-primary btn-lg">Select<div class="ripple-container"></div></a></p>
           </div>
     @endforeach
