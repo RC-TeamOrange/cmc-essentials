@@ -125,24 +125,53 @@ footer{
   float: right;
 }
 
+.login-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.login-card{
+	width: 100%;
+	min-height: 320px;
+	text-align: center;
+}
+
+.login-card input{
+	width: 100%;
+}
 /*Responsiveness*/
 /* Large desktop */
 @media (min-width: 1200px) { 
-  
+  	.login-card{
+		width: 40%;
+	}
  }
  
 /* Portrait tablet to landscape and desktop */
+@media (min-width: 979px)  and (max-width: 1200px){ 
+	.login-card{
+		width: 50%;
+	}
+}
 @media (min-width: 768px) and (max-width: 979px) { 
-  
+  .login-card{
+		width: 60%;
+	}
  }
  
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) { 
-  
+  .page-header h2{
+  	font-size: 1.4em
+  }
  }
  
 /* Landscape phones and down */
 @media (max-width: 480px) { 
+  .page-header h2{
+  		font-size: 1.2em
+  	}
   body > .container{
     margin-top: 30px;
   }

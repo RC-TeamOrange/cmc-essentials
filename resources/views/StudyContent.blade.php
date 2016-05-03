@@ -86,7 +86,7 @@
                     onComplete: function(element){
                         setTimeout( function(){
                             window.location.replace("{{ url('/teaching-units') }}");
-                         }, 3000);
+                         }, 10000);
                         bootbox.alert("Time is up, You will now be redirected back to teaching unit selection page.", function() {
                             window.location.replace("{{ url('/teaching-units') }}");
                         });

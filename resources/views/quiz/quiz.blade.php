@@ -95,7 +95,7 @@
                     onComplete: function(element){
                         setTimeout( function(){
                             window.location.replace("{{ route('teaching-units::quizzes::results', ['slug'=>$teachingUnit->slug, 'quizSlug' => $quiz->slug]) }}");
-                         }, 2000);
+                         }, 10000);
                         bootbox.alert("Time is up, You will now be redirected to your quiz results.", function() {
                             window.location.replace("{{ route('teaching-units::quizzes::results', ['slug'=>$teachingUnit->slug, 'quizSlug' => $quiz->slug]) }}");
                         });
