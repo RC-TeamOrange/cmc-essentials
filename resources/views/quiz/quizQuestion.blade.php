@@ -3,7 +3,10 @@
     <article>
         <div class="well">
             <h3 class="slide-progress"><span class="desc title">Question: </span><span class="count num current">{{ $questions->currentPage() }}</span><span class="desc separator"> of </span><span class="count num total">{{ $questions->total() }}</span></h3>
-            <h2>{!! $question->content !!}</h2>
+            <div class="progress">
+			  <div class="progress-bar progress-bar-info" style="width: {{($questions->currentPage()/$questions->total())*100}}%"></div>
+			</div>
+			<h2>{!! $question->content !!}</h2>
             <?php 
                 $i = 0; 
                 $lables = array('A', 'B', 'C', 'D', 'E', 'F');
