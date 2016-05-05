@@ -53,7 +53,7 @@ $factory->define(StudyMaterial::class, function (Faker\Generator $faker) {
 $factory->define(Quiz::class, function (Faker\Generator $faker) {
     return [
         'level' => 1,
-        'slug' => 1,
+        'slug' => 'quiz-test-slug',
         'title' => 'Test study material title',
         'teaching_unit_id' => function () {
             return factory(TeachingUnit::class)->create()->id;
@@ -66,6 +66,17 @@ $factory->define(Question::class, function (Faker\Generator $faker) {
         'content' => 1,
         'quiz_id' => function () {
             return factory(Quiz::class)->create()->id;
+        }
+    ];
+});
+
+$factory->define(Answer::class, function (Faker\Generator $faker) {
+    return [
+        'content' => 1,
+        'rank'    => 1,
+        'correct' => 1,
+        'question_id' => function () {
+            return factory(Question::class)->create()->id;
         }
     ];
 });

@@ -86,8 +86,7 @@ class QuizQuestionController extends Controller
     * 
     * @returns  Response Response object with the updates quizeChoices cookie, containing the saved selected answer choice.
     */
-    public function saveChoice($teachingUnitSlug, $quizSlug)
-    {
+    public function saveChoice($teachingUnitSlug, $quizSlug){
         if(Request::ajax()){
             $teachingUnit = TeachingUnit::where('slug', $teachingUnitSlug)->first();
             if(Request::get("action") == "updateTimer"){
@@ -104,5 +103,53 @@ class QuizQuestionController extends Controller
             $quizChoices[Request::get('question')] = Request::get('choice');
             return Response(json_encode(Request::cookie('quizeChoices')))->withCookie('quizeChoices', json_encode($quizChoices), 60);
         }
+    }
+    
+    /**
+    * Returns a quiz elloquent model. 
+    * 
+    * @param mixed $id The value of the identifying property of the quiz. int id, or string slug. 
+    * @param string $property The identifying property of the quiz, values are 'id' default or 'slug'
+    * @return Quiz A Quiz Elloquest model .
+    */
+    public function getQuiz($id, $property = 'id'){
+        switch ($property) {
+            case 'id':
+                $quiz = Quiz::findOrFail($id);
+                break;
+                
+            case 'slug':
+                $quiz =  Quiz::where('slug', $id)->firstOrFail();
+                break;
+                
+            default:
+                $quiz = Quiz::findOrFail($id);
+                break;
+        }
+        return $quiz;
+    }
+    
+    /**
+    * Returns a Question elloquent model. 
+    * 
+    * @param mixed $id String or integer, the question id.
+    * 
+    * @return Question A Question Elloquest model .
+    */
+    public function getQuestion($id){
+        $question = Question::findOrFail($id);
+        return $question;
+    }
+    
+    /**
+    * Returns a Answer elloquent model. 
+    * 
+    * @param mixed $id String or integer, the answer id.
+    * 
+    * @return Answer A Answer Elloquest model .
+    */
+    public function getAnswer($id){
+        $answer = Answer::findOrFail($id);
+        return $answer;
     }
 }

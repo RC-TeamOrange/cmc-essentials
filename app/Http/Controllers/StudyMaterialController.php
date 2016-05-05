@@ -54,6 +54,13 @@ class StudyMaterialController extends Controller
         return $response->withCookie('CmcESession', json_encode($cookieData), 180);
     }
     
+    /**
+    * Handles and processes ajax requests to update time when in the study section of a teaching unit.
+    *
+    * @param string $slug The slug of the teaching unit. 
+    *
+    * @return  Illuminate\Http\Response Response Containing updated timer cookie.
+    */
     public function ajaxHandeller($slug){
  		if(Request::ajax()){
  			$teachingUnit = TeachingUnit::where('slug', $slug)->first();
@@ -63,4 +70,16 @@ class StudyMaterialController extends Controller
                  return $response->withCookie('CmcESession', json_encode($cookieData), 180);
  		};
   }
+  
+  /**
+    * Returns a study material elloquent model. 
+    * 
+    * @param mixed $id String or integer, the study material's id.
+    * 
+    * @return StudyMaterial A StudyMaterial Elloquest model .
+    */
+    public function getStudyMaterial($id){
+        $studyMaterial = StudyMaterial::findOrFail($id);
+        return $studyMaterial;
+    }
 }
