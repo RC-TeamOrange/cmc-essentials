@@ -124,7 +124,9 @@ footer{
   color: #ccc !important;
   float: right;
 }
-
+.answer-choices label{
+	color: #333;
+}
 .login-container{
 	display: flex;
 	align-items: center;
