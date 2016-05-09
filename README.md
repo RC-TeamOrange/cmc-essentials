@@ -8,12 +8,12 @@ It was originally created for developing a Computer Mediated Communication learn
 ## Instalation and setup
 
 ### Requirements
-* You need `Laravel version 5.2` installed. [Check the Laravel documentation for installation instructions](https://laravel.com/docs/5.2)
+* You need `Laravel version 5.2` installed. Check the [Laravel documentation](https://laravel.com/docs/5.2) for [installation instructions](https://laravel.com/docs/5.2).
 * Your also need `git` installed to work with the source code, this should be pretty obvious.
 
 ### Installation
 * Clone the master branch of this project on your local computer or server:
-`git clone `
+`git clone https://github.com/RC-TeamOrange/cmc-essentials.git`
 * Do a composer install in the project directory
 NOTE: The adminstartion dashboard of the application requires tinymce for rich text editing. This dependency has a bug, and you need to comment out the first line of code in the config file at `[installation_directory]/config/tinymce.php`
 * Setup your MySQL database, make a copy of the .env.example file in your project root directory and name it .env ; edit the .env file with your database credentials.
